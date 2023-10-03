@@ -1,0 +1,27 @@
+# Notes
+
+## Overall impressions:
+
+The main take-away from this introduction is that ThreeJS is now a stable, mature technology.
+It is capable of producing a vast array of media for all sorts of projects (as seen on ThreeJs.org examples).
+
+Simon warns that some parts of the course (particularly the section on shaders) causes a lot of people to struggle.
+While difficult and/or boring, it's important to power through such content.
+
+"If it's hard to learn, it's valuable knowledge"!
+
+### Links & experiments:
+
+https://bruno-simon.com
+https://threejs-journey.com
+https://www.fromscout.com
+https://orano.imm-g-prod.com/experience/innovation/en (original website isn’t live anymore)
+https://prior.co.jp/discover/en
+https://madbox.io
+https://chartogne-taillet.com/en
+https://my-room-in-3d.vercel.app
+https://organic-sphere.vercel.app
+https://experiment-holographic-terrain.vercel.app
+https://experiment-woodkid-volcano-robot.vercel.app
+https://infinite-world.vercel.app/
+https://awwwards-2022-workshop.vercel.app
