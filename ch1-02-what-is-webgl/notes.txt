@@ -1,0 +1,37 @@
+# Notes
+
+## What is Three.js:
+
+- Three.js is a 3D JavaScript library.
+- It uses the MIT license.
+- It was created by "Mr. Doob", aka. Ricardo Cabello.
+- It enables developers to create 3D experiences for the web.
+- It works with WebGL, but can also work with SVG and CSS (in limited ways).
+- See the change logs on the Three.js Github repo for changes.
+
+## Applications of the technology:
+
+- Rich interactive imagery: https://www.oculus.com/medal-of-honor/?locale=en_GB
+- Motion graphics: https://cornrevolution.resn.global/
+- Product demonstrations: https://live.vanmoof.com/
+- Selectable, animated maps: https://chartogne-taillet.com/en
+- Flow field effects (particle effects)
+- Videogames: https://heraclosgame.com/, https://letsplay.ouigo.es/
+- And so much more.
+
+## What is WebGL?
+
+- WebGL is a JavaScript API.
+- Can render triangles very efficiently.
+- Results can be drawn in <canvas> element (HTML5).
+- Compatible with most modern browsers.
+- Uses the user's GPU which makes it really fast — can do thousands of parallel calculations. CPUs have multiple cores but typically JavaScript in the browser uses one of them so the calculations occur one at a time (blocking).
+- WebGL can be used for 2D as well, but we will focus on 3D.
+- WebGL uses instructions called "shaders" to place points and draw pixels (to colourise and place).
+- Native WebGL is hard. Drawing a single triangle on the canvas takes at least 100 lines of code.
+- Three.js helps by offering a level of abstraction above WebGL — making it easier for us developers.
+
+
+## Other libraries
+
+- There are other WebGL libraries, but they aren't as popular or as stable.
