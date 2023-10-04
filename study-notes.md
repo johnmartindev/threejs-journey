@@ -88,3 +88,24 @@ While difficult and/or boring, it's important to power through such content.
 ## Useful camera method: "lookAt"
 
 - Ensures the camera looks exactly at the centre of a Vector3: `camera.lookAt(mesh.position)`.
+
+## Animation
+
+- ThreeJS animations work through rendering many individual frames.
+- Most devices run at 60 frames per second, but our animations must be a consistent speed regardless of device.
+- We can achieve this with two native JavaScript components.
+- The first is the JavaScript method: `window.requestAnimationFrame(...)`.
+- Despite its name, the main purpose of `requestAnimationFrame` is not animation but calling a function on the next frame.
+- The second component is `Date`. `Date.now()` gives us a timestamp (milliseconds that have passed since 1st January 1970).
+- We calculate the delta of the (difference between current & previous time) and multiply it by transformation values.
+- For example: `mesh.rotation.y += 0.001 * deltaTime`.
+- Another way to achieve consistent speed regardless of device is with ThreeJS's `Clock` class.
+- We call the `elapsedTime` method on a new `Clock` instance and assign it to `mesh.rotation.y`.
+- To achieve 1 revolution per second, we would write `mesh.rotation.y = elapsedTime * (Math.PI * 2)`.
+- Caveat: avoid `getDelta()` on Clock. It can mess with the class. Use `getElapsedTime()` method instead.
+- We can use trigonometry with the likes of sinus (`Math.sin()`).
+- `Math.sin(elapsedTime)` on position `y` makes the cube travel on a vertical sine wave.
+- More advanced animations on a timeline that use delays and tweens are better taken care of with a library (better control).
+- GSAP (GreenSock) is one such library. Add as a dependency to Node modules with `npm install gsap@[version] --save`.
+- GSAP (GreenSock) has its own tick, so we don't need to use `requestAnimationFrame` or `Clock`.
+- The approach we take to animation (whether native JS, Clock, or GSAP) depends on the project and personal preferences.
