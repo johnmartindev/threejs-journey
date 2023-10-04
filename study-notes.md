@@ -14,7 +14,7 @@ While difficult and/or boring, it's important to power through such content.
 
 - Three.js is a 3D JavaScript library.
 - It uses the MIT license.
-- It was created by "Mr. Doob", aka. Ricardo Cabello.
+- It was originally created by "Mr. Doob" (Ricardo Cabello) — now maintained by thousands of contributors.
 - It enables developers to create 3D experiences for the web.
 - It works with WebGL, but can also work with SVG and CSS (in limited ways).
 - See the change logs on the Three.js Github repo for changes.
@@ -43,38 +43,40 @@ While difficult and/or boring, it's important to power through such content.
 
 ## Other libraries
 
-- There are other WebGL libraries, but they aren't as popular or as stable.
+- There are other WebGL libraries, but they aren't as popular and/or as stable and/or as versatile.
+- Examples include: Babylon.js, Fab (formerly Sketchfab), Verge3D, and Unity.
 
 ## Default object positioning
 
-- By default an object is positioned in the middle of the scene.
-- This means we must move the camera on the `Z` axis so it isn't inside of the object.
+- By default, an object is positioned in the middle of the scene.
+- This means we must move the camera on the `Z` axis so we aren't viewing the scene from inside of the object.
 
 ## Using Three classes from modules
 
-- We use Three modules with Node, we need to run our project on a server.
-- We can do this locally with Vite and test over a network with multiple devices.
-- Using Node gives us access to syntax like: `import * as THREE from 'three'` (imports all ThreeJS core classes).
+- When we use Three modules in Node, we need to run our project on a server.
+- We can do this locally with Vite and debug with multiple devices connected to the same network address.
+- Using Node gives us access to syntax like so: `import * as THREE from 'three'` (imports all ThreeJS core classes).
 
 ## Properties for transforming objects
 
 - There are 4 properties for transformations: (1) `position` (2) `scale` (3) `rotation` (4) `quaternion`.
 - Any class that inherits from the `Object3D` class has access to these, i.e. cameras, meshes, etc.
-- Transformations are compiled under the hood using matrices.
+- Transformations are compiled under the hood using matrices (multidimensional mathematical arrays).
 - We must apply transformations before rendering with the renderer for them to show in the scene.
-- In ThreeJS, `position` is a Vector3 and gives us more than `x`, `y`, `z`. We have properties like: `mesh.position.length()`.
+- In ThreeJS, `position` is a Vector3 and gives us more properties than just `x`, `y`, `z`.
 - `mesh.position.normalize()` is useful. `normalize()` method reduces the vector length to 1.
+- `mesh.position.length()` is another useful example. It tells us the distance of a mesh from the centre of the scene.
 - `mesh.position.set(0.5, -0.5, 1)` allows us to pass `x`, `y`, `z` arguments to update 3 coordinates with 1 line of code.
 - See documentation for many more properties and methods: https://threejs.org/docs/#api/en/math/Vector3
 - Use the `AxesHelper` class to assist with transformations.
 - In ThreeJS, `scale` is also a Vector3.
 - Note that `rotation` and `quaternion` affect each other. Updating one will automatically update the other.
-- Rotation is an Euler rather than Vector3.
+- `rotation` is an Euler rather than Vector3.
 - Half a rotation is done with Pi, a full rotation is done with 2 * Pi. A quarter is Pi / 2.
-- Math.PI is the floating point approximation of Pi in JavaScript (3.141592653589793 as per IEEE 754).
+- `Math.PI` is the floating point approximation of Pi in JavaScript (3.141592653589793 as per IEEE 754 standards).
 - Be careful of "gimbal lock". This is when you do rotations in the wrong axes order.
 - One example of a "gimbal lock" in an FPS game: rotating the character's `x` position before `y` position.
-- We can fix gimbal locks by reordering axes order like so: `object.rotation.reorder('yxz')`.
+- We can fix gimbal lock by reordering axes' order like so: `object.rotation.reorder('yxz')`.
 - The axis order problem is why most engines and 3D software uses `quaternion` rather than `rotation`.
 
 ## Groups
@@ -85,4 +87,4 @@ While difficult and/or boring, it's important to power through such content.
 
 ## Useful camera method: "lookAt"
 
-- Ensures the camera looks exactly at the centre of a Vector3: `camera.lookAt(mesh.position)`
+- Ensures the camera looks exactly at the centre of a Vector3: `camera.lookAt(mesh.position)`.
