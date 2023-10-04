@@ -1,6 +1,6 @@
 # Notes
 
-## First impressions of course:
+## First impressions of course
 
 The main take-away from this introduction is that ThreeJS is now a stable, mature technology.
 It is capable of producing a vast array of media for all sorts of projects (as seen on ThreeJs.org examples).
@@ -10,7 +10,7 @@ While difficult and/or boring, it's important to power through such content.
 
 "If it's hard to learn, it's valuable knowledge"!
 
-## What is Three.js:
+## What is Three.js?
 
 - Three.js is a 3D JavaScript library.
 - It uses the MIT license.
@@ -19,7 +19,7 @@ While difficult and/or boring, it's important to power through such content.
 - It works with WebGL, but can also work with SVG and CSS (in limited ways).
 - See the change logs on the Three.js Github repo for changes.
 
-## Applications of the technology:
+## Applications of the technology
 
 - Rich interactive imagery: https://www.oculus.com/medal-of-honor/?locale=en_GB
 - Motion graphics: https://cornrevolution.resn.global/
@@ -77,7 +77,7 @@ While difficult and/or boring, it's important to power through such content.
 - Be careful of "gimbal lock". This is when you do rotations in the wrong axes order.
 - One example of a "gimbal lock" in an FPS game: rotating the character's `x` position before `y` position.
 - We can fix gimbal lock by reordering axes' order like so: `object.rotation.reorder('yxz')`.
-- The axis order problem is why most engines and 3D software uses `quaternion` rather than `rotation`.
+- The axes order problem is why most engines and 3D software uses `quaternion` rather than `rotation`.
 
 ## Groups
 
