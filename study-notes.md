@@ -109,3 +109,56 @@ While difficult and/or boring, it's important to power through such content.
 - GSAP (GreenSock) is one such library. Add as a dependency to Node modules with `npm install gsap@[version] --save`.
 - GSAP (GreenSock) has its own tick, so we don't need to use `requestAnimationFrame` or `Clock`.
 - The approach we take to animation (whether native JS, Clock, or GSAP) depends on the project and personal preferences.
+
+## Cameras
+
+- All ThreeJS cameras (`ArrayCamera`, `CubeCamera`, `OrthographicCamera`, etc.) inherit from `Camera`.
+- `Camera` is an abstract class (meaning we don't use it directly).
+- `ArrayCamera` renders a scene from multiple cameras on specific areas of the render (like old split-screen co-op games).
+- `StereoCamera` renders the scene through two cameras in a way that's useful for 3-D glasses, VR, etc.
+- `CubeCamera` handles 6 renders facing different directions. Used for environment maps (reflection, refraction, shadows, etc.).
+- `OrthographicCamera` creates a render of the scene without perspective. Objects far away don't look smaller. E.g. RTS games.
+- `PerspectiveCamera` is the camera we will continue using a lot. It simulates a real-life camera with perspective.
+- The first parameter in `PerspectiveCamera` is Field of View (FOV) — the vertical viewing angle measured in degrees.
+- A large FOV leads to objects appearing small with a distortion in the surrounding area. Keep FOV between `45` and `75`.
+- The second parameter in `PerspectiveCamera` is Aspect Ratio. This is the width of render divided by its height.
+- The third and fourth parameters are `near` and `far` and correspond to the range of objects that will be rendered.
+- Any object (or part of an object) closer than `near` value or further than `far` will not be visible in the scene.
+- It's tempting to use a very low `near` value and very high `far` value, but this can lead to a bug called "z-fighting".
+- Read more about "z-fighting" here: https://en.wikipedia.org/wiki/Z-fighting
+- A sensible `near` value might be 0.1 with 100 for `far`, but we should experiment with this on a project by project basis.
+- `OrthographicCamera` does not have a FOV parameter (has `left`, `right`, `top`, `bottom`), but has `near` and `far`.
+- Tip: to overcome a flat distorted orthographic view, multiply `left` and `right` by the aspect ratio value.
+
+## Cursor position
+
+- We use `event.clientX` and `event.clientY` (in event listener) to get the cursor position in `window` or `document.body`.
+- However, to get the cursor position relative to the canvas size, we would use: `event.clientX / sizes.width`.
+- Do the same with `clientX` and `sizes.height`.
+- This means the mouse position goes from 0 to 1 as we move the mouse over the canvas left to right.
+- To go from -0.5 to 0.5 (even better than 0 to 1), use `event.clientX / sizes.width - 0.5`.
+- However, ThreeJS's Y goes up rather than down (like `clientY`), so we must invert.
+- Invert like so: `-(event.clientY / sizes.height - 0.5)`.
+
+## Built-in controls
+
+- ThreeJS has built-in controls to save us time: https://threejs.org/docs/index.html?q=controls#examples/en/controls
+- `FlyControls`. Allows us to move the camera like we're on a spaceship. Rotate on 3 axes, go back and forward.
+- `FirstPersonControls`. Like `FlyControls` but has a fixed up axis. More like a bird — can't do a barrel roll.
+- `PointerLockControls`. Uses pointer lock JavaScript API — keeps cursor hidden and centred. Not terribly useful.
+- `OrbitControls`. Similar to controls we coded above. Rotate around a point, translate laterally, and zoom in/out.
+- `TrackballControls`. Like `OrbitControls`, but no vertical angle limits. Rotate/spin even if the scene turns upside down.
+- `TransformControls` and `DragControls`. Nothing to do with the camera. More about manipulating objects.
+
+## Instantiating orbit controls
+
+- To use the `OrbitControls` class we have to import it from a specific part of the `three` module.
+- Import like so: `import { OrbitControls } from 'three/addons/controls/OrbitControls.js`.
+- Some versions of ThreeJS instead have: `import { OrbitControls } from "three/examples/jsm/controls/OrbitControls`.
+- By default, the orbit controls are centred. Change this with `controls.target.y = 1` (example) and `controls.update()`.
+
+## Damping
+
+- "Damping" is a term that refers to smoothing an animation by applying acceleration and friction.
+- Thankfully, there's built-in damping. We don't have to code the formulae manually.
+- We enable damping with something like: `controls.enableDamping = true`. Add `controls.update()` inside the tick function.
