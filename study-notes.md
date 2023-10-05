@@ -162,3 +162,33 @@ While difficult and/or boring, it's important to power through such content.
 - "Damping" is a term that refers to smoothing an animation by applying acceleration and friction.
 - Thankfully, there's built-in damping. We don't have to code the formulae manually.
 - We enable damping with something like: `controls.enableDamping = true`. Add `controls.update()` inside the tick function.
+
+## Fullscreen and resizing
+
+- For a more immersive experience, we could have the canvas fill the size of the viewport.
+- We can also make the page enter into fullscreen mode.
+- We first need the viewport's width and height with `window.innerWidth` and `window.innerHeight`.
+- An HTML page has default margin and padding values we need to get rid of first, though.
+- We use the wildcard selector in CSS to do this: `* { margin: 0; padding: 0; }`.
+- Also, we need to restyle the `.webgl` canvas element to remove page scroll: `.webgl { position: fixed; top: 0; left: 0; }`.
+- Sometimes a blue outline will appear in the browser around the canvas. Add `outline: none` to get rid of this.
+- One last style we should add to prevent scrolling beyond the page limit: `body { overflow: hidden; }`.
+- It should look good. However, when we resize the page, the canvas is no longer occupying the viewport properly.
+- We fix this with a resize event listener that updates `sizes.width` and `sizes.height`.
+- We need to update the camera with `camera.aspect = sizes.width / sizes.height` and `camera.updateProjectionMatrix()`.
+- We also need to update the renderer: `renderer.setSize(sizes.width, sizes.height)`;
+- Lastly, enter fullscreen with a double click event listener that calls the `requestFullscreen` JavaScript API.
+- See documentation for `requestFullscreen` API: https://developer.mozilla.org/en-US/docs/Web/API/Element/requestFullscreen
+
+## Pixel ratio
+
+- The "pixel ratio" is how many physical pixels a screen displays per software pixel.
+- Traditionally, all screens had a pixel ratio of 1.
+- Developers like Apple set a trend for producing screens with a pixel ratio of 2 or more. Retina display has 2, for example.
+- A pixel ratio of 2 means four times more pixels for the GPU to render.
+- A pixel ratio of 3 means nine times more pixels for the GPU to render.
+- Some mobiles have pixel ratios up to 5. But the results are (1) visually imperceptible (2) GPU-intensive. Marketing nonsense!
+- We really don't need a pixel ratio beyond 2. Don't buy a device with a screen beyond 3.
+- Measure your device's pixel ratio by doing a console log of `window.devicePixelRatio`.
+- `renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))` produces better renders on pixel ratios of 2.
+- We cap the pixel ratio at 2 to minimise performance issues on devices with higher pixel ratios.
