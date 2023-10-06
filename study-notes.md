@@ -199,3 +199,17 @@ While difficult and/or boring, it's important to power through such content.
 - Faces are drawn in WebGL using triangles that join over vertices (create surfaces).
 - Geometries can be used for meshes but also particles (a particle per vertex).
 - Geometries can also store UV coordinates, normals, colours, and anything else we like.
+- There are many geometric classes in ThreeJS like `BoxGeometry` (creates a box) and `PlaneGeometry` (creates a plane).
+- We also have `CircleGeometry` (creates a disc/portion of disc) and `ConeGeometry` (creates cone or a portion of a cone).
+- `CylinderGeometry` creates a cylinder, `RingGeometry` creates a flat ring or portion of flat circle.
+- `TorusGeometry` creates a donut shape, `TorusKnotGeometry` creates knot geometry.
+- `DodecahedronGeometry` creates a 12-faced sphere, `OctahedronGeometry` creates an 8-faced sphere.
+- `TetrahedronGeometry` creates a 4-faces sphered.
+- `IcosahedronGeometry` creates a sphere composed of triangles that have roughly the same size.
+- `SphereGeometry` creates the most popular type of sphere where faces looks like quads (combination of two triangles).
+- `ShapeGeometry` creates a shape based on a path, `TubeGeometry` creates a tube following a path.
+- `ExtrudeGeometry` creates an extrusion based on a path. We can add and control the bevel.
+- `LatheGeometry` creates a vase or portion of a vase (more like a revolution).
+- `TextGeometry` creates 3D text (we provide the font in typeface JSON format).
+- We can create complex structures by combing these geometries, e.g. houses, trees, cars, etc.
+- However more complex structures than these will require us to use 3D software such as Blender.
