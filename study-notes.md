@@ -243,3 +243,51 @@ While difficult and/or boring, it's important to power through such content.
 - Within these elements, we have different parameters: minimum, maximum, and step (or precision).
 - We can use chaining syntax like so: `gui.add(mesh.position, 'y').min(- 3).max(3).step(0.01).name('elevation')`.
 - We should get into a habit of including debug UIs/GUIs in projects and adding tweaks to the panel as we go.
+
+
+## Textures
+
+- Textures are based on images that cover the surface of geometry. There many different types and effects.
+- The most simple texture type is color or albedo.
+- Another is alpha. This is a grayscale image where the whitest parts are visible and darkest invisible.
+- Height (or displacement) texture is another grayscale image. This moves vertices to create "relief", but needs subdivisions.
+- "Normal" textures add details (mainly concerning light). No need for subdivisions, doesn't move vertices, and is performant.
+- Ambient occlusion is a grayscale image that adds fake shadows in crevices. Creates contrast.
+- Metalness is a grayscale image where metallic elements are white and non-metallic elements are black. Mostly for reflection.
+- Roughness is used in conjunction with metalness where white is rough and black is smooth. Helps show light dissipation.
+- These texture elements follow "PBR principles" ("physically-based rendering").
+- PBR is a standardised set of calculations for achieving realistic results in how textures are rendered.
+- Read about the calculations for PBR here: https://marmoset.co/posts/physically-based-rendering-and-you-can-too/
+- In ThreeJS we use the `TextureLoader` class (or `Texture` with an `onload` event listener) to apply images as textures.
+- One `TextureLoader` can load multiple textures.
+- We can also transform textures using methods like `repeat`, `offset`, `rotation`, `center` (pivot point), etc.
+
+
+## UV unwrapping
+
+- UV unwrapping is the process of flattening a 3D model's surface into a 2D plane.
+- It's the opposite of UV mapping which is the process of projecting a 2D image texture onto a 3D model's surface
+- UV unwrapping allows for easier as well as more accurate texturing.
+- The letters "UV" don't stand for anything — they just come before "XYZ" in the alphabet (our Cartesian coordinates).
+- If we create our own geometry, we must specify UV coordinates.
+
+## Mipmapping and filtering
+
+- Mipmapping (or "mip mapping" with a space) is a process for creating variations of a texture.
+- It creates smaller versions of a texture: half-size, quarter-size, eighth-size, etc. until 1x1 texture.
+- These variations are sent to the GPU which will choose the appropriate texture to load.
+- ThreeJS and the GPU handle all of this, and we can just set what filter algorithm to use.
+- There are two types of filter algorithms: the minification filter and the magnification filter.
+- Use `NearestFilter` if possible for better performance.
+- An example could be a small texture like a checkered pattern of Minecraft block and using it with `magFilter`.
+- This is a cheap (you can even deactivate mipmapping) but sharp way of rendering such textures.
+
+
+## Preparing a texture
+
+- When preparing a texture consider (1) weight (2) size/resolution (3) data.
+- In terms of weight, .jpg is lossy (lower quality but lighter), .png is lossless (higher quality but heavier). Compress!
+- Resize textures to be as small as possible.
+- It's also important to use textures that are divisible by 2, e.g. 512x512, 1024x1024, etc. for mipmapping to get to 1x1.
+- Textures support transparency, so use .png for the texture for this (.jpg doesn't support transparency).
+- Some texture resource sites: poliigon.com, 3dtextures.me, and arroway-textures.ch

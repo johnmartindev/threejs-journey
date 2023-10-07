@@ -10,6 +10,7 @@
 | Gimbal lock           | A loss in rotation freedom, avoided by using quaternions. |
 | Library               | A collection of pre-written code for common tasks. |
 | Matrix                | A mathematical construct for 3D point transformations. |
+| Mipmapping            | Using pre-scaled textures to improve performance by reducing aliasing and moiré as objects scale. |
 | Normal                | A vector perpendicular to a surface, used in lighting calculations. |
 | Pixel ratio           | The ratio of physical to logical pixels, essential for sharp displays on high-DPI screens. |
 | Quaternion            | A mathematical representation of 3D rotations, preventing gimbal lock. |
