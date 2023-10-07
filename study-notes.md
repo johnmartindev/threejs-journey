@@ -213,3 +213,30 @@ While difficult and/or boring, it's important to power through such content.
 - `TextGeometry` creates 3D text (we provide the font in typeface JSON format).
 - We can create complex structures by combing these geometries, e.g. houses, trees, cars, etc.
 - However more complex structures than these will require us to use 3D software such as Blender.
+- Generally, the more details you want in shape, the more segments it will have (the more "subdivisions").
+- More subdivisions means more faces which means more triangles (recall that it's 2 triangles per face).
+- Better discern these details in a shape by enabling wireframe on the material: `material: true` as a parameter.
+
+## Buffer geometries
+
+- We can create our own geometries programmatically using `BufferGeometry`.
+- `BufferGeometry` is a very efficient way of creating shapes and the GPU will render it very quickly.
+- This efficiency and speed comes from the way computers read values in a `Float32Array`.
+- `Float32Array` is a native JavaScript API that stores elements (of a predefined length) of a common data type.
+- In the case of `BufferGeometry`, that one type of data is a float.
+- These float values occupy an array that is one-dimensional.
+- To create a triangle, for instance, we need an array with a length of 9: `const positionsArray = new Float32Array(9)`.
+- This is because a triangle has 3 vertices — each vertex with three parameters designating a position: `X`, `Y`, and `Z`.
+- We then convert to a ThreeJS buffer attribute `const positionsAttribute = new THREE.BufferAttribute(positionsArray)`.
+- One interesting thing with `BufferGeometry` is that you can mutualise vertices using the `index` property.
+- Consider a cube. Multiple faces can use some vertices like the ones in the corners.
+- And if you look closely, every vertex can be used by various neighbour triangles.
+- That will result in a smaller attribute array and performance improvement.
+
+## Debug UI
+
+- An efficient way of reviewing changes in real-time as we develop in ThreeJS is with.. Debug UI
+- We can create our own. However there are many libraries for this that can save us time.
+- "dat.GUI", "control-panel", "ControlKit", "Guify", "Ouify"
+- dat.GUI is the most popular one.
+- 
