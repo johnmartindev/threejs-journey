@@ -235,8 +235,11 @@ While difficult and/or boring, it's important to power through such content.
 
 ## Debug UI
 
-- An efficient way of reviewing changes in real-time as we develop in ThreeJS is with.. Debug UI
-- We can create our own. However there are many libraries for this that can save us time.
-- "dat.GUI", "control-panel", "ControlKit", "Guify", "Ouify"
+- An efficient way of reviewing changes in real-time as we develop in ThreeJS is with debugging UIs/GUIs.
+- We can create our own. However there are many existing importable libraries to save time.
+- Some of these libraries include: "dat.GUI", "control-panel", "ControlKit", "Guify", "Ouify".
 - dat.GUI is the most popular one.
-- 
+- There are different elements we can add to dat.GUI panel: range, colour, text, checkbox, select, button, and folder.
+- Within these elements, we have different parameters: minimum, maximum, and step (or precision).
+- We can use chaining syntax like so: `gui.add(mesh.position, 'y').min(- 3).max(3).step(0.01).name('elevation')`.
+- We should get into a habit of including debug UIs/GUIs in projects and adding tweaks to the panel as we go.
