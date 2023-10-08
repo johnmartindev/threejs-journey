@@ -5,11 +5,14 @@
 | Aspect ratio          | Width-to-height ratio, ensuring undistorted display of 3D scenes. |
 | Damping               | Reduction in oscillation amplitude, used for realistic motion in animations. |
 | Delta                 | Time difference between current and previous frames, used for smooth motion. |
+| Environment mapping   | A classic technique in computer graphics for making objects appear shiny or reflective. |
 | Face                  | A flat surface on a 3D shape, formed by connecting vertices. |
 | Field of view (FOV)   | The angle encompassing the visible scene through a camera. |
 | Gimbal lock           | A loss in rotation freedom, avoided by using quaternions. |
+| HDRI                  | A 360° image for lighting/backgrounds — a mix of images (of different exposures) of the same scene. |
 | Library               | A collection of pre-written code for common tasks. |
 | Matrix                | A mathematical construct for 3D point transformations. |
+| MatCaps               | Images used as textures to fake a whole material including lighting and reflections. |
 | Mipmapping            | Using pre-scaled textures to improve performance by reducing aliasing and moiré as objects scale. |
 | Normal                | A vector perpendicular to a surface, used in lighting calculations. |
 | Pixel ratio           | The ratio of physical to logical pixels, essential for sharp displays on high-DPI screens. |

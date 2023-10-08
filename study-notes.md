@@ -291,3 +291,29 @@ While difficult and/or boring, it's important to power through such content.
 - It's also important to use textures that are divisible by 2, e.g. 512x512, 1024x1024, etc. for mipmapping to get to 1x1.
 - Textures support transparency, so use .png for the texture for this (.jpg doesn't support transparency).
 - Some texture resource sites: poliigon.com, 3dtextures.me, and arroway-textures.ch
+
+
+## Materials
+
+- Used to put a colour on every visible pixel of the geometry.
+- The algorithms used to do this are called "shaders".
+- To use set opacity or to use an alpha map, we also have to set the `transparent` property to `true`.
+- We can use the `side` property to limit the visibility of face sides. `FrontSide` (default), `BackSide`, or `DoubleSide`.
+- Try to avoid `DoubleSide` where possible as it's more GPU intensive.
+- "Normals" are information that contains the direction of the outside of the face.
+- Normals can be used for lighting, reflection, refraction, etc.
+- There's a `flatShading` property to remove how normals interpolate between vertices.
+- Clever use of materials can save us adding extra geometry, lights, etc. to our scene and save on GPU processing.
+- One way to do so is with MatCaps (material captures). This fakes a whole material including lighting and reflections.
+- Here are some MatCaps we can use: https://github.com/nidorx/matcaps
+- We can also create our own MatCaps using 3D software (rendering a sphere in front of the camera in a square image).
+- We can also use 2D software like Photoshop, but this can be more difficult.
+- There are materials available to us in ThreeJS like lambert, phong, toon, and so on.
+- Lambert is more performant than phong, but there are more visible artefacts.
+- `MeshStandardMaterial` is usually a better option than deciding whether to use lambert or phong.
+- Use `dat.gui` to adjust roughness, metalness, and so on, in the scene.
+- Try to use normal maps and height/displacement maps before creating more vertices (more performant).
+- To add realism, use environment maps, particularly `cubeTextureLoader`.
+- Search the web for cubemaps or use HDRIHaven: https://hdrihaven.com/
+- Convert HDRIs to cubemaps using this tool: https://matheowis.github.io/HDRI-to-CubeMap/
+- Always check licenses for resources found online. Thankfully, HDRIHaven has a CC0 license (free for even commercial use).
