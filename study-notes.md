@@ -297,7 +297,7 @@ While difficult and/or boring, it's important to power through such content.
 
 - Used to put a colour on every visible pixel of the geometry.
 - The algorithms used to do this are called "shaders".
-- To use set opacity or to use an alpha map, we also have to set the `transparent` property to `true`.
+- To set opacity or to use an alpha map, we also have to set the `transparent` property to `true`.
 - We can use the `side` property to limit the visibility of face sides. `FrontSide` (default), `BackSide`, or `DoubleSide`.
 - Try to avoid `DoubleSide` where possible as it's more GPU intensive.
 - "Normals" are information that contains the direction of the outside of the face.
@@ -317,3 +317,68 @@ While difficult and/or boring, it's important to power through such content.
 - Search the web for cubemaps or use HDRIHaven: https://hdrihaven.com/
 - Convert HDRIs to cubemaps using this tool: https://matheowis.github.io/HDRI-to-CubeMap/
 - Always check licenses for resources found online. Thankfully, HDRIHaven has a CC0 license (free for even commercial use).
+
+
+## 3D text
+
+- To create text in ThreeJS we use the `TextGeometry` class.
+- We can use fonts provided by ThreeJS (in the "examples/fonts" folder of the Three module).
+- We can use our own fonts, but need to convert them to a typeface format with this tool: http://gero3.github.io/facetype.js/
+- We also need to use a class called `FontLoader` (must be separately imported).
+- We should always check we have the right to use a particular font (check license files).
+- In creating text geometry we should be aware of bevels, curve segments, and other factors that affect performance.
+- A quick way to centre text is with `textGeometry.center()`.
+- Use materials like MatCaps to create nice looking styles for the text while the scene performant.
+
+
+## Optimisation
+
+- An effective way of monitoring how optimised the code/scene is is with `console.time()` and `console.timeEnd()`.
+- Check how many milliseconds are taken to render certain functions and if we can speed this up.
+
+
+## Going live
+
+- Traditionally, we would put a site online with `npm run build` and upload the `dist` folder using FTP.
+- We will use a modern hosting solution than this.
+- The modern solution uses "continuous integration" (automation of testing, deployment, etc).
+- Use services like Vercel, Netlify, Github Pages, and so on. Most have free plans (with limitations).
+- Use Github or GitLab or Bitbucket for Git repositories for version control.
+
+
+## Adding lights
+
+- To add a light, we instantiate the relevant light class and add it to the scene.
+- We have different light classes including `AmbientLight` (omnidirectional lighting).
+- There's also `DirectionalLight` (sun-like effect with light rays in parallel).
+- `HemisphereLight` is another light class. Similar to ambient light but with two colours for top and bottom.
+- `PointLight` is an infinitesimally small light source that spreads in all directions. Looks like a lighter.
+- `RectAreaLight` works like a box soft-light you see in photoshoots. Mixes directional and diffuse light.
+- `SpotLight` works like a torch/flashlight.
+- Lights can cost a lot when it comes to performance. There's even a limit in how many we can add (50?).
+- We should add as few lights as possible and use less expensive lights.
+- Minimal cost lights: ambient, hemisphere. Moderate cost: directional, point light. High cost: spotlight and rect area light.
+- When we need to have a lot of lighting, use baking (the tradeoff is that we cannot move lighting of this sort).
+- Positioning lights can be difficult. Use helpers.
+
+
+## Shadows
+
+- By default, we see a dark shadow in the back of objects. This is called a "core shadow".
+- For realism, however, we may also want "drop shadows" — the silhouette of objects on a plane.
+- Shadows have always been a challenge for developers to efficiently achieve.
+- ThreeJS has an in-built solution: light renders stored as textures called "shadow maps".
+- To activate shadows: `renderer.shadowMap.enabled = true`.
+- Also enable the following: `sphere.castShadow = true`, `plane.receiveShadow = true`, and `directionalLight.castShadow = true`.
+- By default the shadow map is 512x512. We can increase this (but keep it power of 2 for mipmap).
+- Example: `directionalLight.shadow.mapSize.width = 1024` & `directionalLight.shadow.mapSize.height = 1024`.
+- To help us debug, we can use the `CameraHelper` class. This corresponds to `directionalLight.shadow.camera`.
+- For better optimisation/fewer glitches, adjust: `directionalLight.shadow.camera.near` & `directionalLight.shadow.camera.far`.
+- Also reduce the amplitude by adjusting `top`, `right`, `bottom`, and `left`. This makes for crisper shadows. Experiment!
+- To create a blur in the shadow, do this: `directionalLight.shadow.radius = 10;`
+- There are different algorithms for shadow maps: https://threejs.org/docs/#api/en/renderers/WebGLRenderer.shadowMap
+- `PCFShadowMap` is the default, but we can try `PCFSoftShadowMap` for better quality (at some cost to performance).
+- "Baking" shadows, like baking lights, is a good solution. Use `TextureLoader` for this.
+- If we want baked shadows that can move, we can create a plane under the shape and apply an alphamap texture to it.
+- As for the solution we should use for shadows in a scene? Dynamic or baked? It very much depends on the project.
+- A mix of both can work well. E.g, Simon's portfolio has a car with dynamic shadows (other element shadows are baked).

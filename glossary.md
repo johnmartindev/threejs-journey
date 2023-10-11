@@ -8,6 +8,7 @@
 | Environment mapping   | A classic technique in computer graphics for making objects appear shiny or reflective. |
 | Face                  | A flat surface on a 3D shape, formed by connecting vertices. |
 | Field of view (FOV)   | The angle encompassing the visible scene through a camera. |
+| Frustum culling       | Technique that avoids computation of things that are not visible. |
 | Gimbal lock           | A loss in rotation freedom, avoided by using quaternions. |
 | HDRI                  | A 360° image for lighting/backgrounds — a mix of images (of different exposures) of the same scene. |
 | Library               | A collection of pre-written code for common tasks. |
