@@ -382,3 +382,14 @@ While difficult and/or boring, it's important to power through such content.
 - If we want baked shadows that can move, we can create a plane under the shape and apply an alphamap texture to it.
 - As for the solution we should use for shadows in a scene? Dynamic or baked? It very much depends on the project.
 - A mix of both can work well. E.g, Simon's portfolio has a car with dynamic shadows (other element shadows are baked).
+
+
+## Particles
+
+- Particles can be used to create stars, smoke, rain, dust, fire, etc.
+- We can have thousands in our scene with a reasonable frame rate.
+- Each particle is composed of a plane (two triangles) that always face the camera.
+- Creating particles is similar to creating a mesh, we need: geometry, a material, and a `Points` instance.
+- Enable `sizeAttentuation` in the material for a sense of perspective.
+- Use `BufferGeometry` to create particles programmatically for better performance.
+-
