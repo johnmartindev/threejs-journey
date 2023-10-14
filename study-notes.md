@@ -387,9 +387,27 @@ While difficult and/or boring, it's important to power through such content.
 ## Particles
 
 - Particles can be used to create stars, smoke, rain, dust, fire, etc.
-- We can have thousands in our scene with a reasonable frame rate.
-- Each particle is composed of a plane (two triangles) that always face the camera.
+- We can have hundreds of thousands in our scene with a reasonable frame rate.
+- Each particle is generated on each vertex of the geometry and always faces the camera.
 - Creating particles is similar to creating a mesh, we need: geometry, a material, and a `Points` instance.
-- Enable `sizeAttentuation` in the material for a sense of perspective.
+- Enable `sizeAttentuation` in the material for a sense of perspective (closer particles are bigger).
 - Use `BufferGeometry` to create particles programmatically for better performance.
--
+- We can add textures to our particles too. Useful resource: https://www.kenney.nl/assets/particle-pack
+- When adding textures to particles, we can run into issues with rendering.
+- One such rendering issue is when a texture is opaque and blots out particles behind it.
+- We can solve this by enabling transparency and adding values to `alphaMap` and `alphaTest`.
+- As well as texturing particles, we can animate them too.
+- We can animate by looping through/updating particles geometry `attributes.position` array in the tick.
+- However, this is computational expensive.
+- A better way of animating textured particles is creating our own materials and shaders (later lessons).
+- Use `lerp` for mixing colours.
+
+## Performance tips
+
+- For event listeners, use `onFinishChange` rather than `onChange`.
+- Use `dispose` to remove any unnecessary geometry and material from the scene (to prevent memory leaks).
+- Use `remove` to remove any unnecessary elements, such as points, from the scene (to prevent memory leaks).
+- Use GPU profiling. See browser's dev tools to profile your app's performance. Look out for bottlenecks.
+- Cull invisible objects/keep frustum culling enabled.
+- Use texture atlases.
+- Reduce the number of vertices — simplify models where possible.
