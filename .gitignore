@@ -60,3 +60,6 @@ typings/
 
 # VS Code directories
 .vscode/
+
+# Other
+note-to-self.md
