@@ -402,6 +402,7 @@ While difficult and/or boring, it's important to power through such content.
 - A better way of animating textured particles is creating our own materials and shaders (later lessons).
 - Use `lerp` for mixing colours.
 
+
 ## Performance tips
 
 - For event listeners, use `onFinishChange` rather than `onChange`.
@@ -411,3 +412,48 @@ While difficult and/or boring, it's important to power through such content.
 - Cull invisible objects/keep frustum culling enabled.
 - Use texture atlases.
 - Reduce the number of vertices — simplify models where possible.
+
+
+## Normalizing values
+
+- It's sometimes wise to normalize values so that everything has the the same range.
+- A cursor's position on the screen might go from 0 to 1000, for example.
+- However, if we make everything use a low value of -0.5 and a high value of 0.5, it simplifies development.
+- For the cursor position, we implement it with something like this: `cursor.x = event.clientX / sizes.width - 0.5`
+
+
+## Physics
+
+- Physics can enhance the user experience with added realism, engagement, and immersion.
+- There's many forces we can use like friction, gravity, buoyancy, tension, etc.
+- However, writing these from scratch can be counterproductive. Use libraries where possible.
+- If a 2D physics library is sufficient (projects where vertical axis aren't needed, e.g. pool game), we should use it.
+- Ammo.js might be the most used physics library. However, Cannon.js is easier to implement and understand.
+- Libraries like Cannon.js have their own virtual setup that's distinct from the ThreeJS scene.
+- Cannon.js, for example, uses `Vec3` instead of `Vector3`, `Body` for objects, and so on.
+- When these virtual elements of Cannon.js are updated, we need to update the ThreeJS scene to match it.
+- Make sure to keep code organised because these projects can become messy fast.
+- Keep in mind: `Box` in Cannon.js uses "half extent" rather than width, height, and depth. Double to normalise.
+- For a more immersive experience, we may want to consider adding sound events.
+- For a more maintained version of CannonJS, try Cannon-Es.
+- To save ourselves time in writing code for both physical and virtual worlds, use "Physijs".
+
+
+## Optimising physics
+
+- Make sure the physics engine we're using is not set to use the default `NaiveBroadphase` algorithm.
+- Use `GridBroadphase` or `SAPBroadphase` ("Sweep and Prune") instead. Much more efficient.
+- A huge performance: enable `allowSleep`. This means a body isn't constantly tested (unless subject to sufficient force).
+- Use "Workers" to improve frame-rate. These spread the processing load across the CPU.
+
+
+## Imported models
+
+- To create complex shapes, we should use dedicated 3D software for modelling. E.g. Blender, Cinema 4D, Maya, 3DS Max etc.
+- There are many model formats: https://en.wikipedia.org/wiki/List_of_file_formats#3D_graphics
+- Popular formats: OBJ, FBX, STL, PLY, COLLADA, 3DS, GLTF.
+- GLTF is the standard and should cover most of our needs.
+- GLTF supports different sets of data like geometries, materials, cameras, lights, animations, etc.
+- GLTF sample models: https://github.com/KhronosGroup/glTF-Sample-Models
+- There are different GLTF formats: gLTF, gLTF-Binary, gLTF-Draco, and gLTF-Embedded.
+- GLTF are exported with PBR materials.
