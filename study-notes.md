@@ -447,7 +447,7 @@ While difficult and/or boring, it's important to power through such content.
 - Use "Workers" to improve frame-rate. These spread the processing load across the CPU.
 
 
-## Imported models
+## Importing models
 
 - To create complex shapes, we should use dedicated 3D software for modelling. E.g. Blender, Cinema 4D, Maya, 3DS Max etc.
 - There are many model formats: https://en.wikipedia.org/wiki/List_of_file_formats#3D_graphics
@@ -455,5 +455,78 @@ While difficult and/or boring, it's important to power through such content.
 - GLTF is the standard and should cover most of our needs.
 - GLTF supports different sets of data like geometries, materials, cameras, lights, animations, etc.
 - GLTF sample models: https://github.com/KhronosGroup/glTF-Sample-Models
-- There are different GLTF formats: gLTF, gLTF-Binary, gLTF-Draco, and gLTF-Embedded.
+- There are different GLTF formats: gLTF, gLTF-Binary (.glb), gLTF-Draco, and gLTF-Embedded.
 - GLTF are exported with PBR materials.
+- Use the GLTF and ThreeJS loaders to import a GLTF. Use `console.log` to review its properties.
+- You will see that it adds it as a `Group` scene (including children like a camera). We only want the mesh!
+- We can do this by importing only the mesh children element. However, it's missing scale metadata.
+- If the imported mesh without scale metadata is too big or small, fix this in 3D software and try again.
+- Try Draco compression for high geometry counts. Check the size of model files.
+- Draco allows for a much lighter model (applied to buffer data, i.e. geometry (stored in .bin)).
+- Use the Draco decoder (it's written in Web Assembly and runs in a "worker").
+- To use animation "actions" from the `AnimationClip`, we need to create an `AnimationMixer`.
+- ThreeJS editor to test models: https://www.threejs.org/editor
+
+## Raycaster
+
+- A raycaster casts a ray in a specific direction and tests what objects intersect with it.
+- For example: a laser gun hitting something, checking if an object is under the cursor? (simulating mouse events), etc.
+- We set up raycaster in ThreeJS by instantiating the `Raycaster` class and setting origin and direction parameters.
+- Be sure to normalize the direction parameter to 1 using the `normalize()` method.
+- To cast a ray and get the intersection we can use either `intersectObject` (one object) or `intersectObjects` (multiple).
+- Both of these return an object array with properties like `distance`, `face`, `faceIndex`, `object`, `point`, and `uv`.
+- It can be computationally expensive to test objects on each frame. Use sparingly.
+- We can raycast with 3D models we've imported as well as meshes.
+
+
+## Custom models with Blender
+
+- There's many 3D graphics software programs for modelling like Cinema4D, Maya, 3DSMax, Blender, ZBrush, etc.
+- Blender is probably the best all-rounder given it's free, performant, light, cross-platform, etc.
+- In using Blender, know how to truck, pedestal, dolly, tilt, pan (sidenote: a lot of people confuse "truck" and "pan").
+- Blender shortcuts: https://docs.google.com/document/d/1wZzJrEgNye2ZQqwe8oBh54AXwF5cYIe56EGFe2bb0QU/edit
+- `CTRL + TAB` is perhaps the most useful Blender shortcut (brings up a circular menu). Or `F3` for search.
+- There are different modes like object and edit mode, different shading modes like solid, material, wireframe, etc.
+- Have a familiarity with the UI and what the different panels are and what they contain.
+- When working with materials, note "principled BSDF". It uses PBR so will look the same in ThreeJS as in Blender.
+- "Eevee" is the default render engine in Blender. It works in real-time using GPU. Performant but not too realistic.
+- "Workbench" is another render engine, but it's a bit dated now — only really suitable for specific use-cases/effects.
+- "Cycles" is another one. It uses raytracing which is great for shadows, reflections, etc. Not as performant as Eevee.
+- When modelling, decide on a unit scale. Go to scene properties and change it to "none" if you prefer.
+- Always scale in "edit" mode to keep the scale of the object 1.
+- There are many resources to learn Blender. Just make sure the tutorials use Blender beyond version 2.8.
+- Blender's Official Youtube channel', Blender Guru (Youtube), Grant Abbit (Youtube), CGFastTrack (Youtube) are among the best.
+
+
+## Environment maps
+
+- Environment maps, as mentioned previously, can be used as a background, as reflections, and as lighting.
+- There are different styles and formats for environment maps: LDR (JPEGs, PNGs, etc.) and HDR (HDR, EXR, RAW, etc.).
+- Different styles and formats require different loaders.
+- An HDRI equirectangular environment map (.hdr file), for example, needs a RGBE (red green blue exponent) loader.
+- The RGBE loader encodes for HDR and allows for colour values with a much higher range than traditional images.
+- While HDR maps look great, they can be heavy. Best to reserve for lighting where you can get away with a low res texture.
+- Use the transverse method to update all models at once with the ability to do a single `dat.gui` for it all.
+- Use `backgroundBlurriness` and `backgroundIntensity` tweaks to find suitable values.
+
+
+## Custom environment maps
+
+- We can make our own environment maps with Blender, but first need to adjust some values in the properties panel.
+- We should first specify the "cycles" render engine for more realistic renders.
+- Viewport samples should be set to a max of 256 (can be high with a higher performance computer).
+- In materials, set the surface colour to black.
+- In output, set resolution to 2048x1024 (stick to power of 2 resolutions).
+- Change the % scale to test rendering at different resolutions 50% would render half the resolution, for example.
+- Add a camera and make it panoramic => equirectangular (or whichever map format needed).
+- Add an area light. Make sure its visible to the renderer (ray visibility => camera (enable this)).
+- We could also make custom environment maps with AI. "NVIDIA Canvas" is a tool for this.
+- Keep in mind some of these tools export to EXR format which needs a different loader.
+- BlockadeLabs.com is a useful tool for creating environment maps, but look out for pricing (some free, some not).
+- As well as regular skyboxes, we can have "Ground Projected" skyboxes.
+- However, ground projected skyboxes aren't suitable for maps with objects close to the centre.
+- When we render into a cube texture, we need to use `WebGLCubeRenderTarget`. A resolution of 256 is ideal.
+- Sometimes objects will occlude others and we can get around this with layers.
+- By setting layers on a camera, the camera will only see objects matching the same layers.
+- For example, a camera with layers set to 1 and 2 will only see objects with layers set to 1 and 2.
+- All layers are 0 by default. Think of it like Z-index in CSS.
