@@ -530,3 +530,111 @@ While difficult and/or boring, it's important to power through such content.
 - By setting layers on a camera, the camera will only see objects matching the same layers.
 - For example, a camera with layers set to 1 and 2 will only see objects with layers set to 1 and 2.
 - All layers are 0 by default. Think of it like Z-index in CSS.
+
+
+## Realistic renders
+
+- In producing 3D projects, sometimes the goal is realism. Perhaps we're showcasing a real-life product on a website.
+- One way to achieve this (seen above) is with an environment map, e.g. HDR equirectangular texture (for better lighting).
+- Tone mapping is another way to achieve realism. It "fakes" the conversion of LDR to HDR.
+- There are different `toneMapping` properties/types: Linear, Reinhard, Cineon, and ACESFilmic.
+- We can adjust how strong this tone map will be with `toneMappingExposure`.
+- Another step for adding realism to our scene is enabling "anti-aliasing". This removes staircasing artefacts/jagged edges.
+- In comp-sci there's different anti-aliasing solutions. One is super sampling (SSAA) AKA. "fullscreen sampling" (FSAA).
+- Super sampling makes a bigger render and compares it to the normal-sized render. Pixel value averages are taken.
+- Super sampling uses 4 times more pixels, so watch for performance issues!
+- Multi-sampling is another anti-aliasing solution. It averages pixels from its neighbours.
+- We can do antialiasing in ThreeJS by adding `antialias: true` to the renderer.
+- Screens with a pixel ratio above 1 don't really need antialias.
+- Since environment maps cannot cast shadows we need to add a light that roughly matches the environment lighting.
+- We do this with a directional light. Remember if we adjust the position of this we have to apply `updateWorldMatrix()`.
+- By default, however, ThreeJS lighting isn't realistic.
+- We can fix this by setting `useLegacyLights` to false. Best to do this at the start of a realistic scene project.
+- Another step for adding realism is with shadows on with shadowMap: `renderer.shadowMap.enabled = true`.
+- PCFShadowMap should be chosen as the type: `renderer.shadowMap.type = THREE.PCFShadowMap`;
+- For sharper shadows, increase mapsize from the default 512x512, e.g. `directionalLight.shadow.mapSize.set(1024, 1024)`.
+- Colorspace is another important consideration for achieving realism. It's how colours are optimised.
+- If a texture looks washed out, it may be the case that it needs a different colour space (`colorSpace`) applied to it.
+- GLTF imports contain metadata that specifies sRGB colourspace, so may not need to be changed.
+- Make sure you're using a good screen/monitor with colour accuracy. Apple Macs are usually good.
+- Also, keep in mind we can spend too much time on a scene and lose perspective. Take breaks and look again with fresh eyes.
+- Ask others for feedback.
+- Something else to be aware of when using models is "shadow acne" (weird shadow patterns).
+- We can fix shadow acne with `bias` for flat surfaces and `normalBias` for rounded surfaces.
+- Lastly, we can use other techniques like ambient occlusion, bloom, etc. but these require post-processing (later lesson).
+
+
+## Code structuring for bigger projects
+
+- A professional project should contain a maintainable codebase. Part of this is organisation.
+- Unorganised (spaghetti) code is hard to find, hard to re-use specific parts, liable to conflicts, etc.
+- What we need to do is implement a separation of concerns (SoC) with modularisation and encapsulation.
+- In order to do this, we should use a bundler like Vite or Webpack.
+- JavaScript can handle modules natively now, but it's not universally compatible yet and doesn't manage dependencies.
+- When using modules, we can use the "tree-shakable" approach of only importing what we need from modules.
+- This is lighter, but it makes code much more verbose and potentially messy.
+- In terms of how to structure the code in each module, we can use classes or functions.
+- The base class (the main app) should be called something expressive like "Experience.js".
+- Keep all modules within their own folders, so "Experience.js" would be in the "Experience" folder.
+- In the Experience folder, we could also have a "Utils.js" class for methods dealing with resizing, etc.
+- Personal preferences of ourselves and our team factor into code structuring/conventions.
+- For example, using an instance of "Experience" as a global variable may be seen as unacceptable to certain developers.
+
+
+## Shaders
+
+- Shaders is probably the most demanding topic within learning WebGL and ThreeJS.
+- Everything showing up in the WebGL render is made possible because of shaders.
+- Native WebGL requires we know shaders.
+- We can create our own. They are written in GLSL.
+- GLSL is sent to the GPU and (1) gets the position of each vertex in geometry (2) colorises each visible pixel.
+- "Pixel" isn't quite the right word, though. Technically we are talking about "fragments".
+- We send a lot of data to the shader: mesh transformations, information about the camera, colours, textures, etc.
+- There are two types of shaders: (1) vertex shader (2) fragment shader.
+- The vertex shader deals with vertices coordinates, mesh transformations, and so on. The GPU follows these instructions.
+- Some data like vertex position will be different. This type of data is the "attribute".
+- Some data like the position of the mesh are the same for every vertex. This type of data is the "uniform".
+- We can send data from the vertex shader to the fragment shader. These values are interpolated. This is call "varying".
+- Why would we write our own shaders at all? ThreeJS materials are limited and we can add custom post-processing.
+
+
+## Creating a custom shader with GLSL
+
+- To create our own shaders in ThreeJS, we can use the classes: (1) `ShaderMaterial` and (2) `RawShaderMaterial`.
+- `ShaderMaterial` has some code automatically added to the shader codes, where `RawShaderMaterial` does not.
+- We can write shader programs in code that's inline with JavaScript using template literals.
+- However, it's best to not write inline code, but to separate GLSL into their own files with syntax highlighting.
+- We need a plugin to import these GLSL in the likes of Vite. One is `vite-plugin-glsl`.
+- Note: GLSL does not support logs or prints,
+- GLSL is white-space insensitive, so indentation is not important.
+- GLSL requires semicolons to delimit lines of code.
+- GLSL is a typed language. We must specify the variable type immediately: `float`, `int`, `string`, etc.
+- A type that we'll commonly see in GLSL is `vec2`. This has two values: x, y (coordinates).
+- We can change values after their assignment. `vec2 someVect = vec2(0.1, 0.2);` `someVect.x = 1.1;` will change it.
+- `vec3` is like `vec2` but with an additional value: x, y, z (coordinates) or r, g, b (colour values).
+- We can make `vec3` from mutating a `vec2` by adding an additional value. This is called "swizzling".
+- `vec4` is like `vec3` but with a 4th value: x, y, z, and w (coordinates) or r, g, b, and a (colour + alpha).
+- There are other types like `mat2`, `mat3`, `mat4`, `sample2D`, but we'll deal with these later.
+- In GLSL, we can create functions. However, these must start with the type of value that will be returned.
+
+
+there are built-in functions like `sin`, `cos`, `max`, `min`, `pow`, `exp`, `mod`, `clamp`
+
+very specialised functions built in too like
+
+`cross`, `dot`, `mix`, `stop`, `smoothstep`, `length`, `distance`, etc. `reflect`, `refract`, `normalize`
+
+there's not much beginner-friendly documentation, but try Shaderific, Kronos Group Registry, and Book of Shaders
+
+
+## Vertex shader
+
+Needs the `void main()` function which is called automatically and doesn't return anything
+
+gl_Position....
+
+vec4 because even though it looks like 3d.. it's in "clip space" which requires a 4th value, but we don't deal with that
+
+`modelMatrix` applies transformations relative to the mesh (position, rotation, scale)
+`viewMatrix` applies transformations relative to the camera (position, rotation, fov, near, and far)
+`projectionMatrix` transforms the coordinates into the clip space coordinates
