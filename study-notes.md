@@ -369,7 +369,7 @@ While difficult and/or boring, it's important to power through such content.
 - Shadows have always been a challenge for developers to efficiently achieve.
 - ThreeJS has an in-built solution: light renders stored as textures called "shadow maps".
 - To activate shadows: `renderer.shadowMap.enabled = true`.
-- Also enable the following: `sphere.castShadow = true`, `plane.receiveShadow = true`, and `directionalLight.castShadow = true`.
+- Also enable the following: `sphere.castShadow = true`, `plane.receiveShadow = true`, & `directionalLight.castShadow = true`.
 - By default the shadow map is 512x512. We can increase this (but keep it power of 2 for mipmap).
 - Example: `directionalLight.shadow.mapSize.width = 1024` & `directionalLight.shadow.mapSize.height = 1024`.
 - To help us debug, we can use the `CameraHelper` class. This corresponds to `directionalLight.shadow.camera`.
@@ -469,7 +469,7 @@ While difficult and/or boring, it's important to power through such content.
 
 ## Raycaster
 
-- A raycaster casts a ray in a specific direction and tests what objects intersect with it.
+- A raycaster casts a ray in a specific direction and tests if objects intersect with it.
 - For example: a laser gun hitting something, checking if an object is under the cursor? (simulating mouse events), etc.
 - We set up raycaster in ThreeJS by instantiating the `Raycaster` class and setting origin and direction parameters.
 - Be sure to normalize the direction parameter to 1 using the `normalize()` method.
@@ -616,25 +616,28 @@ While difficult and/or boring, it's important to power through such content.
 - `vec4` is like `vec3` but with a 4th value: x, y, z, and w (coordinates) or r, g, b, and a (colour + alpha).
 - There are other types like `mat2`, `mat3`, `mat4`, `sample2D`, but we'll deal with these later.
 - In GLSL, we can create functions. However, these must start with the type of value that will be returned.
-
-
-there are built-in functions like `sin`, `cos`, `max`, `min`, `pow`, `exp`, `mod`, `clamp`
-
-very specialised functions built in too like
-
-`cross`, `dot`, `mix`, `stop`, `smoothstep`, `length`, `distance`, etc. `reflect`, `refract`, `normalize`
-
-there's not much beginner-friendly documentation, but try Shaderific, Kronos Group Registry, and Book of Shaders
+- There are built-in basic functions like `sin`, `cos`, `max`, `min`, `pow`, `exp`, `mod`, `clamp`, etc.
+- There are also more specialised functions like `cross`, `dot`, `mix`, `stop`, `smoothstep`, `length`, `distance`, etc.
+- There's no beginner-friendly documentation, but try "Shaderific", "Kronos Group Registry", and "Book of Shaders".
 
 
 ## Vertex shader
 
-Needs the `void main()` function which is called automatically and doesn't return anything
+- The vertex shade needs a function beginning `void main()`. This is called automatically and doesn't return anything.
+- A `gl_Position` will be set with model matrix values and any modifications.
+- We're working in `vec4` because of something called the "clip space" which has a 4th value (one we don't deal with).
+- There are some components to be aware of:
+- `modelMatrix` applies transformations relative to the mesh (position, rotation, scale).
+- `viewMatrix` applies transformations relative to the camera (position, rotation, fov, near, and far).
+- `projectionMatrix` transforms the coordinates into the clip space coordinates.
 
-gl_Position....
 
-vec4 because even though it looks like 3d.. it's in "clip space" which requires a 4th value, but we don't deal with that
+## Fragment shader
 
-`modelMatrix` applies transformations relative to the mesh (position, rotation, scale)
-`viewMatrix` applies transformations relative to the camera (position, rotation, fov, near, and far)
-`projectionMatrix` transforms the coordinates into the clip space coordinates
+- When working with the raw shader, we have to set a float precision value.
+- The precision can be `highp` (beware of performance hit), `mediump`, or `lowp` (buggy on some devices).
+- We usually use `mediump` to avoid too many issues.
+- `gl_fragColor` already exists and assigns colour using a `vec4` for r, g, b, a.
+- We can add our own attributes to `BufferGeometry`.
+- We cannot send attributes to the fragment, but we can send to the vertex to the fragment using "varying".
+- We can use uniforms in both vertex and fragment shader. It's data that doesn't change between vertices.
