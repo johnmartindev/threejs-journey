@@ -641,3 +641,16 @@ While difficult and/or boring, it's important to power through such content.
 - We can add our own attributes to `BufferGeometry`.
 - We cannot send attributes to the fragment, but we can send to the vertex to the fragment using "varying".
 - We can use uniforms in both vertex and fragment shader. It's data that doesn't change between vertices.
+
+## Shader patterns
+
+- In creating shaders, we can create specific patterns like stars, circles, light lenses, waves, etc.
+- Using textures to do this can get heavy and we'll have less control.
+- We can do it programmatically by using UV coordinates to manipulate the fragment shader.
+- However, we cannot send UV coordinates directly to the fragment shaders.
+- We need to pass UV coordinates to the vertex shader and then to the fragment shader using "varying".
+- In creating shader patterns, avoid using "if else" statements. These are computationally expensive.
+- Instead, use GLSL methods like `step`, `mod`, etc.
+- If we need to use random values, we should bear in mind there is no native random functions in GLSL.
+- Use the following resource to add a randomiser function: https://thebookofshaders.com/10/
+- To add more "natural" randomness, we should consider "Perlin noise": https://thebookofshaders.com/11/
