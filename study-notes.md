@@ -467,6 +467,7 @@ While difficult and/or boring, it's important to power through such content.
 - To use animation "actions" from the `AnimationClip`, we need to create an `AnimationMixer`.
 - ThreeJS editor to test models: https://www.threejs.org/editor
 
+
 ## Raycaster
 
 - A raycaster casts a ray in a specific direction and tests if objects intersect with it.
@@ -642,6 +643,7 @@ While difficult and/or boring, it's important to power through such content.
 - We cannot send attributes to the fragment, but we can send to the vertex to the fragment using "varying".
 - We can use uniforms in both vertex and fragment shader. It's data that doesn't change between vertices.
 
+
 ## Shader patterns
 
 - In creating shaders, we can create specific patterns like stars, circles, light lenses, waves, etc.
@@ -654,3 +656,32 @@ While difficult and/or boring, it's important to power through such content.
 - If we need to use random values, we should bear in mind there is no native random functions in GLSL.
 - Use the following resource to add a randomiser function: https://thebookofshaders.com/10/
 - To add more "natural" randomness, we should consider "Perlin noise": https://thebookofshaders.com/11/
+
+
+## Particles revisited: tips
+
+- Use shaders for efficiency and performance (rather than animating each vertex of geometry with the CPU).
+- Use randomness in your particles. If you don't, it looks fake. In real life, particles are random sizes.
+- The size of particles depends on pixel ratio. Use `renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))`.
+- Size attenuation should be implemented. However, it's not as easy as setting an object value to "true".
+- In ThreeJS's source code, there's an attenuation formula that can be adapted: `gl_PointSize *= ( scale / - mvPosition.z );`.
+- Check ThreeJS source code for any other formulae we might need in shaders. Copy, paste, and adapt it.
+
+
+## Modifying materials
+
+- As well as creating brand new shader materials, we can modify built-in ThreeJS ones.
+- Perhaps we want to add vertex animations to MeshStandardMaterial?
+- We can do this by either using a ThreeJS hook that is triggered before compilation or recreating the material.
+- Or recreating a ThreeJS material. Although, this would take a long time. We would have to handle lights, env. maps, etc.
+- Using a ThreeJS hook is the best approach in most cases: `material.onBeforeCompile = (shader) => {}`.
+- This code snippet gives us access to vertex and fragment shader information.
+- For more information on 2D matrices and how to transform them, read: https://thebookofshaders.com/08/
+
+
+## Post processing
+
+- Post-processing is about adding effects on the final image (the render).
+- People mostly use this technique in filmmaking, but we can do it in WebGL too.
+- We can adjust depth of field, bloom, "god ray", motion blur, add glitch effects, outlines, change colours, etc.
+- ...
