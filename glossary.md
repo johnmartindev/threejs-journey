@@ -7,6 +7,7 @@
 | Buffer geometry       | An efficient (but less flexible) way of defining and storing geometry data. |
 | Damping               | Reduction in oscillation amplitude, used for realistic motion in animations. |
 | Delta                 | Time difference between current and previous frames, used for smooth motion. |
+| Draw call             | An instruction sent to the GPU to render a certain set of primitives. |
 | Environment mapping   | A classic technique in computer graphics for making objects appear shiny or reflective. |
 | Face                  | A flat surface on a 3D shape, formed by connecting vertices. |
 | Field of view (FOV)   | The angle encompassing the visible scene through a camera. |

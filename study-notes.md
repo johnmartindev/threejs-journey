@@ -684,4 +684,58 @@ While difficult and/or boring, it's important to power through such content.
 - Post-processing is about adding effects on the final image (the render).
 - People mostly use this technique in filmmaking, but we can do it in WebGL too.
 - We can adjust depth of field, bloom, "god ray", motion blur, add glitch effects, outlines, change colours, etc.
-- ...
+- A common way to do post processing with ThreeJS is with the `RenderTarget`.
+- The RenderTarget works like a buffer of sorts. Instead of rendering to the canvas, it renders to a texture first.
+- This texture is then able to have effects added to it through the fragment shader.
+- The effects we apply in post processing are called "passes".
+- We can add multiple passes, but each pass reduces performance!
+- We need two render targets for multiple passes.
+- This allows us to read on one and write on the other and switch between (ping pong buffering).
+- Fortunately, we don't have to worry about doing this manually. `EffectComposer` takes care of it.
+- Keep an eye on performances when using post processing!
+- Manual: https://threejs.org/docs/#manual/en/introduction/How-to-use-post-processing
+- Examples: https://threejs.org/examples/#webgl_postprocessing
+- Issues that might need fixed: resizing effects composer, gamma pass for reducing darkness in RGB shift, and anti-aliasing.
+
+
+## Anti-aliasing passes
+
+- FXAA: Performant, but the result is just "okay" (can be blurry).
+- SMAA: Usually better than FXAA, but less performant — not to be confused with MSAA.
+- SSAA: Best quality but the worst performance.
+- TAA: Performant but limited result.
+- There are many others, but these are the main ones.
+
+
+## Performance tips II
+
+- We know we should target a 60fps experience (at least).
+- However, we should consider performance in terms of the CPU and the GPU.
+- We can do this with an FPS meter, such as "stats.js": `npm install stats.js`.
+- Disable FPS-limiting on Chrome: https://gist.github.com/brunosimon/c15e7451a802fa8e34c0678620022f7d
+- Test on an array of devices, browsers, etc. and keep an eye on the weight of the website.
+- Minimise "draw calls" (actions of the GPU). The less of them, the better the performance.
+- Spector.js is a good Chrome extension for monitoring draw calls.
+- To get a count of triangles, lines, points, etc., we can use this: `console.log(renderer.info`
+- Write efficient JavaScript — especially in the tick function.
+- Dispose of things: https://threejs.org/docs/#manual/en/introduction/How-to-dispose-of-objects
+- Avoid lights if possible, but if you have to use them use cheap lights like ambient and hemisphere lights.
+- Use baked shadows when shadows are needed.
+- Use a smaller shadow map.
+- Use castShadow and receiveShadow wisely.
+- Deactivate shadow update (shadow on first frame only):
+- `renderer.shadowMap.autoUpdate = false` and `renderer.shadowMp.needsUpdate = true`.
+- Use small textures and resize your texture as small as possible. Also, keep power of 2 resolutions for mipmaps.
+- Use buffer geometries. Merge geometries using `BufferGeometryUtils`.
+- Create an `InstancedMesh`.
+- Use Draco compression on complex models. Use Gzip compression on assets.
+- Lower FOV, lower range between near and far, and use frustum culling.
+- Keep pixel ratios at 2 or less.
+- Only use anti-alias when need be.
+- Limit passes on post-processing. Perhaps merge passes when multiple passes are needed.
+- Consider `lowp` precision for lower performance devices when implementing shaders.
+- Avoid "if" statements when working with shaders. Use methods like `clamp()` instead.
+- Considering using a texture representing the likes of Perlin noise than having it generate programmatically.
+- Use "defines" in GLSL code.
+- Do calculations in the vertex shader. Pass the result to fragment shader with varyings (rather than in fragment shader).
+-
