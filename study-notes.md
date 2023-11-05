@@ -36,6 +36,34 @@ I hope these notes will provide a useful record to look back on when applying kn
 
 1.6.4 - Instantiating orbit controls
 
+1.6.5 - Damping
+
+1.7.1 - Fullscreen and resizing
+
+1.7.2 - Pixel ratio
+
+1.8.1 - Geometries
+
+1.8.2 - Buffer geometries
+
+1.9 - Debug UI
+
+1.10.1 - Textures
+
+1.10.2 - UV unwrapping
+
+1.10.3 - Mipmapping and filtering
+
+1.10.4 - Preparing a texture
+
+1.11 - Materials
+
+1.12.1 - 3D text
+
+1.12.2 - Optimisation
+
+1.13 - Going live
+
 ### 2. Classic techniques
 
 ### 3. Advanced techniques
@@ -52,21 +80,23 @@ I hope these notes will provide a useful record to look back on when applying kn
 ## 1.1. - First impressions of the course
 
 The main take-away from this introduction is that ThreeJS is now a stable, mature technology.
-It is capable of producing a vast array of media for all sorts of projects (as seen on ThreeJs.org examples).
+It is capable of producing a vast array of media for all sorts of projects (as seen in ThreeJS.org examples).
 
-Simon warns that some parts of the course (particularly the section on shaders) causes a lot of people to struggle.
+Simon warns that some parts of the course (particularly the section on shaders) cause a lot of people to struggle.
 While difficult and/or boring, it's important to power through such content.
 
-"If it's hard to learn, it's valuable knowledge"!
+> "If it's hard to learn, it's valuable knowledge"!
+
 
 ## 1.2.1 - What is ThreeJS?
 
-- ThreeJS (or Three.js) is a 3D JavaScript library.
+- ThreeJS (or "Three.js") is a 3D JavaScript library.
 - It uses the MIT license.
 - It was originally created by "Mr. Doob" (Ricardo Cabello) — now maintained by thousands of contributors.
 - It enables developers to create 3D experiences for the web.
 - It works with WebGL, but can also work with SVG and CSS (in limited ways).
 - See the change logs on the Three.js Github repo for changes.
+
 
 ## 1.2.2 Applications of the technology
 
@@ -74,9 +104,10 @@ While difficult and/or boring, it's important to power through such content.
 - Motion graphics: https://cornrevolution.resn.global/
 - Product demonstrations: https://live.vanmoof.com/
 - Selectable, animated maps: https://chartogne-taillet.com/en
-- Flow field effects (particle effects)
+- Flow-field effects (particle effects)
 - Videogames: https://heraclosgame.com/, https://letsplay.ouigo.es/
 - ...and so much more.
+
 
 ## 1.2.3 - What is WebGL?
 
@@ -87,33 +118,37 @@ While difficult and/or boring, it's important to power through such content.
 - Uses the GPU which makes it really fast — can do thousands of parallel calculations.
 - CPUs have multiple cores but typically JavaScript (in browser) uses one, so calculations occur one at a time (blocking).
 - WebGL can be used for 2D as well, but we will focus on 3D.
-- WebGL uses instructions called "shaders" to place points and draw pixels (to colourise and place).
+- WebGL uses instructions called "shaders" to place points and draw pixels/fragments (to colourise and place).
 - Native WebGL is hard. Drawing a single triangle on the canvas takes at least 100 lines of code.
-- Three.js helps by offering a level of abstraction above WebGL — making it easier for us developers.
+- ThreeJS helps by offering a level of abstraction above WebGL — making it efficient in which to develop.
+
 
 ## 1.2.4 - Other libraries
 
 - There are other WebGL libraries, but they aren't as popular and/or as stable and/or as versatile.
-- Examples include: Babylon.js, Fab (formerly Sketchfab), Verge3D, and Unity.
+- Examples include: Babylon.js, Fab (formerly "Sketchfab"), Verge3D, and Unity.
+
 
 ## 1.3.1 - Default object positioning
 
 - By default, an object is positioned in the middle of the scene.
 - This means we must move the camera on the `Z` axis so we aren't viewing the scene from inside of the object.
 
+
 ## 1.3.2 - Using Three classes from modules
 
-- When we use Three modules in Node, we need to run our project on a server.
+- When we use ThreeJS modules in Node, we need to run our project on a server.
 - We can do this locally with Vite and debug with multiple devices connected to the same network address.
 - Using Node gives us access to syntax like so: `import * as THREE from 'three'` (imports all ThreeJS core classes).
+
 
 ## 1.4.1 - Properties for transforming objects
 
 - There are 4 properties for transformations: (1) `position` (2) `scale` (3) `rotation` (4) `quaternion`.
-- Any class that inherits from the `Object3D` class has access to these, i.e. cameras, meshes, etc.
+- Any class that inherits from the `Object3D` class has access to these, e.g. cameras, meshes, etc.
 - Transformations are compiled under the hood using matrices (multidimensional mathematical arrays).
 - We must apply transformations before rendering with the renderer for them to show in the scene.
-- In ThreeJS, `position` is a Vector3 and gives us more properties than just `x`, `y`, `z`.
+- In ThreeJS, `position` is a "Vector3" and gives us more properties than just `x`, `y`, `z`.
 - `mesh.position.normalize()` is useful. `normalize()` method reduces the vector length to 1.
 - `mesh.position.length()` is another useful example. It tells us the distance of a mesh from the centre of the scene.
 - `mesh.position.set(0.5, -0.5, 1)` allows us to pass `x`, `y`, `z` arguments to update 3 coordinates with 1 line of code.
@@ -129,15 +164,18 @@ While difficult and/or boring, it's important to power through such content.
 - We can fix gimbal lock by reordering axes' order like so: `object.rotation.reorder('yxz')`.
 - The axes order problem is why most engines and 3D software uses `quaternion` rather than `rotation`.
 
+
 ## 1.4.2 - Groups
 
-- To transform many objects at once we can use the `Group` class.
+- To transform many objects at once, we can use the `Group` class.
 - This inherits from/is an instance of `Object3D`.
 - Get into the habit of putting things in groups!
+
 
 ## 1.4.3 - Useful camera method: "lookAt"
 
 - Ensures the camera looks exactly at the centre of a Vector3: `camera.lookAt(mesh.position)`.
+
 
 ## 1.5 - Animation
 
@@ -160,13 +198,14 @@ While difficult and/or boring, it's important to power through such content.
 - GSAP (GreenSock) has its own tick, so we don't need to use `requestAnimationFrame` or `Clock`.
 - The approach we take to animation (whether native JS, Clock, or GSAP) depends on the project and personal preferences.
 
+
 ## 1.6.1 - Cameras
 
 - All ThreeJS cameras (`ArrayCamera`, `CubeCamera`, `OrthographicCamera`, etc.) inherit from `Camera`.
 - `Camera` is an abstract class (meaning we don't use it directly).
 - `ArrayCamera` renders a scene from multiple cameras on specific areas of the render (like old split-screen co-op games).
 - `StereoCamera` renders the scene through two cameras in a way that's useful for 3-D glasses, VR, etc.
-- `CubeCamera` handles 6 renders facing different directions. Used for environment maps (reflection, refraction, shadows, etc.).
+- `CubeCamera` handles 6 renders facing different directions. Used for environment maps (reflection, shadows, etc.).
 - `OrthographicCamera` creates a render of the scene without perspective. Objects far away don't look smaller. E.g. RTS games.
 - `PerspectiveCamera` is the camera we will continue using a lot. It simulates a real-life camera with perspective.
 - The first parameter in `PerspectiveCamera` is Field of View (FOV) — the vertical viewing angle measured in degrees.
@@ -180,6 +219,7 @@ While difficult and/or boring, it's important to power through such content.
 - `OrthographicCamera` does not have a FOV parameter (has `left`, `right`, `top`, `bottom`), but has `near` and `far`.
 - Tip: to overcome a flat distorted orthographic view, multiply `left` and `right` by the aspect ratio value.
 
+
 ## 1.6.2 - Cursor position
 
 - We use `event.clientX` and `event.clientY` (in event listener) to get the cursor position in `window` or `document.body`.
@@ -190,30 +230,34 @@ While difficult and/or boring, it's important to power through such content.
 - However, ThreeJS's Y goes up rather than down (like `clientY`), so we must invert.
 - Invert like so: `-(event.clientY / sizes.height - 0.5)`.
 
-## 1.63 - Built-in controls
+
+## 1.6.3 - Built-in controls
 
 - ThreeJS has built-in controls to save us time: https://threejs.org/docs/index.html?q=controls#examples/en/controls
-- `FlyControls`. Allows us to move the camera like we're on a spaceship. Rotate on 3 axes, go back and forward.
+- `FlyControls`. Allows us to move the camera like we're on a spaceship. Rotates on 3 axes, goes back and forward.
 - `FirstPersonControls`. Like `FlyControls` but has a fixed up axis. More like a bird — can't do a barrel roll.
 - `PointerLockControls`. Uses pointer lock JavaScript API — keeps cursor hidden and centred. Not terribly useful.
 - `OrbitControls`. Similar to controls we coded above. Rotate around a point, translate laterally, and zoom in/out.
-- `TrackballControls`. Like `OrbitControls`, but no vertical angle limits. Rotate/spin even if the scene turns upside down.
+- `TrackballControls`. Like `OrbitControls`, but no vertical angle limits. Rotates/spins even if the scene turns upside down.
 - `TransformControls` and `DragControls`. Nothing to do with the camera. More about manipulating objects.
 
-## 1.64 - Instantiating orbit controls
+
+## 1.6.4 - Instantiating orbit controls
 
 - To use the `OrbitControls` class we have to import it from a specific part of the `three` module.
 - Import like so: `import { OrbitControls } from 'three/addons/controls/OrbitControls.js`.
 - Some versions of ThreeJS instead have: `import { OrbitControls } from "three/examples/jsm/controls/OrbitControls`.
 - By default, the orbit controls are centred. Change this with `controls.target.y = 1` (example) and `controls.update()`.
 
-## 1.65 - Damping
+
+## 1.6.5 - Damping
 
 - "Damping" is a term that refers to smoothing an animation by applying acceleration and friction.
 - Thankfully, there's built-in damping. We don't have to code the formulae manually.
 - We enable damping with something like: `controls.enableDamping = true`. Add `controls.update()` inside the tick function.
 
-## 1.71 - Fullscreen and resizing
+
+## 1.7.1 - Fullscreen and resizing
 
 - For a more immersive experience, we could have the canvas fill the size of the viewport.
 - We can also make the page enter into fullscreen mode.
@@ -230,7 +274,8 @@ While difficult and/or boring, it's important to power through such content.
 - Lastly, enter fullscreen with a double click event listener that calls the `requestFullscreen` JavaScript API.
 - See documentation for `requestFullscreen` API: https://developer.mozilla.org/en-US/docs/Web/API/Element/requestFullscreen
 
-## 1.72 - Pixel ratio
+
+## 1.7.2 - Pixel ratio
 
 - The "pixel ratio" is how many physical pixels a screen displays per software pixel.
 - Traditionally, all screens had a pixel ratio of 1.
@@ -243,7 +288,8 @@ While difficult and/or boring, it's important to power through such content.
 - `renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))` produces better renders on pixel ratios of 2.
 - We cap the pixel ratio at 2 to minimise performance issues on devices with higher pixel ratios.
 
-## 1.81 - Geometries
+
+## 1.8.1 - Geometries
 
 - Geometries in three-dimensional space are comprised of vertices (points) and faces.
 - Faces are drawn in WebGL using triangles that join over vertices (create surfaces).
@@ -267,7 +313,8 @@ While difficult and/or boring, it's important to power through such content.
 - More subdivisions means more faces which means more triangles (recall that it's 2 triangles per face).
 - Better discern these details in a shape by enabling wireframe on the material: `material: true` as a parameter.
 
-## 1.82 - Buffer geometries
+
+## 1.8.2 - Buffer geometries
 
 - We can create our own geometries programmatically using `BufferGeometry`.
 - `BufferGeometry` is a very efficient way of creating shapes and the GPU will render it very quickly.
@@ -283,6 +330,7 @@ While difficult and/or boring, it's important to power through such content.
 - And if you look closely, every vertex can be used by various neighbour triangles.
 - That will result in a smaller attribute array and performance improvement.
 
+
 ## 1.9 - Debug UI
 
 - An efficient way of reviewing changes in real-time as we develop in ThreeJS is with debugging UIs/GUIs.
@@ -295,7 +343,7 @@ While difficult and/or boring, it's important to power through such content.
 - We should get into a habit of including debug UIs/GUIs in projects and adding tweaks to the panel as we go.
 
 
-## 1.10 - Textures
+## 1.10.1 - Textures
 
 - Textures are based on images that cover the surface of geometry. There many different types and effects.
 - The most simple texture type is color or albedo.
@@ -313,7 +361,7 @@ While difficult and/or boring, it's important to power through such content.
 - We can also transform textures using methods like `repeat`, `offset`, `rotation`, `center` (pivot point), etc.
 
 
-## UV unwrapping
+## 1.10.2 - UV unwrapping
 
 - UV unwrapping is the process of flattening a 3D model's surface into a 2D plane.
 - It's the opposite of UV mapping which is the process of projecting a 2D image texture onto a 3D model's surface
@@ -321,7 +369,8 @@ While difficult and/or boring, it's important to power through such content.
 - The letters "UV" don't stand for anything — they just come before "XYZ" in the alphabet (our Cartesian coordinates).
 - If we create our own geometry, we must specify UV coordinates.
 
-## Mipmapping and filtering
+
+## 1.10.3 - Mipmapping and filtering
 
 - Mipmapping (or "mip mapping" with a space) is a process for creating variations of a texture.
 - It creates smaller versions of a texture: half-size, quarter-size, eighth-size, etc. until 1x1 texture.
@@ -333,9 +382,9 @@ While difficult and/or boring, it's important to power through such content.
 - This is a cheap (you can even deactivate mipmapping) but sharp way of rendering such textures.
 
 
-## Preparing a texture
+## 1.10.4 - Preparing a texture
 
-- When preparing a texture consider (1) weight (2) size/resolution (3) data.
+- When preparing a texture, consider (1) weight (2) size/resolution (3) data.
 - In terms of weight, .jpg is lossy (lower quality but lighter), .png is lossless (higher quality but heavier). Compress!
 - Resize textures to be as small as possible.
 - It's also important to use textures that are divisible by 2, e.g. 512x512, 1024x1024, etc. for mipmapping to get to 1x1.
@@ -343,7 +392,7 @@ While difficult and/or boring, it's important to power through such content.
 - Some texture resource sites: poliigon.com, 3dtextures.me, and arroway-textures.ch
 
 
-## Materials
+## 1.11 - Materials
 
 - Used to put a colour on every visible pixel of the geometry.
 - The algorithms used to do this are called "shaders".
@@ -369,7 +418,7 @@ While difficult and/or boring, it's important to power through such content.
 - Always check licenses for resources found online. Thankfully, HDRIHaven has a CC0 license (free for even commercial use).
 
 
-## 3D text
+## 1.12.1 - 3D text
 
 - To create text in ThreeJS we use the `TextGeometry` class.
 - We can use fonts provided by ThreeJS (in the "examples/fonts" folder of the Three module).
@@ -381,13 +430,13 @@ While difficult and/or boring, it's important to power through such content.
 - Use materials like MatCaps to create nice looking styles for the text while the scene performant.
 
 
-## Optimisation
+## 1.12.2 - Optimisation
 
 - An effective way of monitoring how optimised the code/scene is is with `console.time()` and `console.timeEnd()`.
 - Check how many milliseconds are taken to render certain functions and if we can speed this up.
 
 
-## Going live
+## 1.13 - Going live
 
 - Traditionally, we would put a site online with `npm run build` and upload the `dist` folder using FTP.
 - We will use a modern hosting solution than this.
@@ -396,7 +445,7 @@ While difficult and/or boring, it's important to power through such content.
 - Use Github or GitLab or Bitbucket for Git repositories for version control.
 
 
-## Adding lights
+## 2. Adding lights
 
 - To add a light, we instantiate the relevant light class and add it to the scene.
 - We have different light classes including `AmbientLight` (omnidirectional lighting).
