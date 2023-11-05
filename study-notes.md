@@ -6,7 +6,7 @@ I hope these notes will provide a useful record to look back on when applying kn
 ## Contents
 
 ### 1. Basics
-1.1   - First impressions of the course
+1.1.1 - First impressions of the course
 
 1.2.1 - What is ThreeJS?
 
@@ -26,7 +26,7 @@ I hope these notes will provide a useful record to look back on when applying kn
 
 1.4.3 - Useful camera method: "lookAt"
 
-1.5   - Animation
+1.5.1 - Animation
 
 1.6.1 - Cameras
 
@@ -46,7 +46,7 @@ I hope these notes will provide a useful record to look back on when applying kn
 
 1.8.2 - Buffer geometries
 
-1.9 - Debug UI
+1.9.1 - Debug UI
 
 1.10.1 - Textures
 
@@ -56,17 +56,48 @@ I hope these notes will provide a useful record to look back on when applying kn
 
 1.10.4 - Preparing a texture
 
-1.11 - Materials
+1.11.1 - Materials
 
 1.12.1 - 3D text
 
 1.12.2 - Optimisation
 
-1.13 - Going live
+1.13.1 - Going live
+
 
 ### 2. Classic techniques
 
+2.1.1 - Lights
+
+2.2.1 - Shadows
+
+2.3.1 - Particles
+
+2.3.2 - Performance tips
+
+2.3.3 - Normalizing values
+
+
 ### 3. Advanced techniques
+
+3.1.1 - Physics
+
+3.2.1 - Optimising physics
+
+3.3.1 - Importing models
+
+3.4.1 - Raycaster
+
+3.5.1 - Custom models with Blender
+
+3.6.1 - Environment maps
+
+3.6.2 - Custom environment maps
+
+3.6.3 - Realistic renders
+
+3.7.1 - Code structing for bigger projects
+
 
 ### 4. Shaders
 
@@ -177,7 +208,7 @@ While difficult and/or boring, it's important to power through such content.
 - Ensures the camera looks exactly at the centre of a Vector3: `camera.lookAt(mesh.position)`.
 
 
-## 1.5 - Animation
+## 1.5.1 - Animation
 
 - ThreeJS animations work through rendering many individual frames.
 - Most devices run at 60 frames per second, but our animations must be a consistent speed regardless of device.
@@ -331,7 +362,7 @@ While difficult and/or boring, it's important to power through such content.
 - That will result in a smaller attribute array and performance improvement.
 
 
-## 1.9 - Debug UI
+## 1.9.1 - Debug UI
 
 - An efficient way of reviewing changes in real-time as we develop in ThreeJS is with debugging UIs/GUIs.
 - We can create our own. However there are many existing importable libraries to save time.
@@ -392,7 +423,7 @@ While difficult and/or boring, it's important to power through such content.
 - Some texture resource sites: poliigon.com, 3dtextures.me, and arroway-textures.ch
 
 
-## 1.11 - Materials
+## 1.11.1 - Materials
 
 - Used to put a colour on every visible pixel of the geometry.
 - The algorithms used to do this are called "shaders".
@@ -436,7 +467,7 @@ While difficult and/or boring, it's important to power through such content.
 - Check how many milliseconds are taken to render certain functions and if we can speed this up.
 
 
-## 1.13 - Going live
+## 1.13.1 - Going live
 
 - Traditionally, we would put a site online with `npm run build` and upload the `dist` folder using FTP.
 - We will use a modern hosting solution than this.
@@ -445,7 +476,7 @@ While difficult and/or boring, it's important to power through such content.
 - Use Github or GitLab or Bitbucket for Git repositories for version control.
 
 
-## 2. Adding lights
+## 2.1.1 - Adding lights
 
 - To add a light, we instantiate the relevant light class and add it to the scene.
 - We have different light classes including `AmbientLight` (omnidirectional lighting).
@@ -461,7 +492,7 @@ While difficult and/or boring, it's important to power through such content.
 - Positioning lights can be difficult. Use helpers.
 
 
-## Shadows
+## 2.2.1 - Shadows
 
 - By default, we see a dark shadow in the back of objects. This is called a "core shadow".
 - For realism, however, we may also want "drop shadows" — the silhouette of objects on a plane.
@@ -483,7 +514,7 @@ While difficult and/or boring, it's important to power through such content.
 - A mix of both can work well. E.g, Simon's portfolio has a car with dynamic shadows (other element shadows are baked).
 
 
-## Particles
+## 2.3.1 - Particles
 
 - Particles can be used to create stars, smoke, rain, dust, fire, etc.
 - We can have hundreds of thousands in our scene with a reasonable frame rate.
@@ -502,7 +533,7 @@ While difficult and/or boring, it's important to power through such content.
 - Use `lerp` for mixing colours.
 
 
-## Performance tips
+## 2.3.2 - Performance tips
 
 - For event listeners, use `onFinishChange` rather than `onChange`.
 - Use `dispose` to remove any unnecessary geometry and material from the scene (to prevent memory leaks).
@@ -513,7 +544,7 @@ While difficult and/or boring, it's important to power through such content.
 - Reduce the number of vertices — simplify models where possible.
 
 
-## Normalizing values
+## 2.3.3 - Normalizing values
 
 - It's sometimes wise to normalize values so that everything has the the same range.
 - A cursor's position on the screen might go from 0 to 1000, for example.
@@ -521,7 +552,7 @@ While difficult and/or boring, it's important to power through such content.
 - For the cursor position, we implement it with something like this: `cursor.x = event.clientX / sizes.width - 0.5`
 
 
-## Physics
+## 3.1.1 - Physics
 
 - Physics can enhance the user experience with added realism, engagement, and immersion.
 - There's many forces we can use like friction, gravity, buoyancy, tension, etc.
@@ -538,7 +569,7 @@ While difficult and/or boring, it's important to power through such content.
 - To save ourselves time in writing code for both physical and virtual worlds, use "Physijs".
 
 
-## Optimising physics
+## 3.2.1 - Optimising physics
 
 - Make sure the physics engine we're using is not set to use the default `NaiveBroadphase` algorithm.
 - Use `GridBroadphase` or `SAPBroadphase` ("Sweep and Prune") instead. Much more efficient.
@@ -546,7 +577,7 @@ While difficult and/or boring, it's important to power through such content.
 - Use "Workers" to improve frame-rate. These spread the processing load across the CPU.
 
 
-## Importing models
+## 3.3.1 - Importing models
 
 - To create complex shapes, we should use dedicated 3D software for modelling. E.g. Blender, Cinema 4D, Maya, 3DS Max etc.
 - There are many model formats: https://en.wikipedia.org/wiki/List_of_file_formats#3D_graphics
@@ -567,7 +598,7 @@ While difficult and/or boring, it's important to power through such content.
 - ThreeJS editor to test models: https://www.threejs.org/editor
 
 
-## Raycaster
+## 3.4.1 - Raycaster
 
 - A raycaster casts a ray in a specific direction and tests if objects intersect with it.
 - For example: a laser gun hitting something, checking if an object is under the cursor? (simulating mouse events), etc.
@@ -579,7 +610,7 @@ While difficult and/or boring, it's important to power through such content.
 - We can raycast with 3D models we've imported as well as meshes.
 
 
-## Custom models with Blender
+## 3.5.1 - Custom models with Blender
 
 - There's many 3D graphics software programs for modelling like Cinema4D, Maya, 3DSMax, Blender, ZBrush, etc.
 - Blender is probably the best all-rounder given it's free, performant, light, cross-platform, etc.
@@ -598,7 +629,7 @@ While difficult and/or boring, it's important to power through such content.
 - Blender's Official Youtube channel', Blender Guru (Youtube), Grant Abbit (Youtube), CGFastTrack (Youtube) are among the best.
 
 
-## Environment maps
+## 3.6.1 - Environment maps
 
 - Environment maps, as mentioned previously, can be used as a background, as reflections, and as lighting.
 - There are different styles and formats for environment maps: LDR (JPEGs, PNGs, etc.) and HDR (HDR, EXR, RAW, etc.).
@@ -610,7 +641,7 @@ While difficult and/or boring, it's important to power through such content.
 - Use `backgroundBlurriness` and `backgroundIntensity` tweaks to find suitable values.
 
 
-## Custom environment maps
+## 3.6.2 - Custom environment maps
 
 - We can make our own environment maps with Blender, but first need to adjust some values in the properties panel.
 - We should first specify the "cycles" render engine for more realistic renders.
@@ -632,7 +663,7 @@ While difficult and/or boring, it's important to power through such content.
 - All layers are 0 by default. Think of it like Z-index in CSS.
 
 
-## Realistic renders
+## 3.6.3 - Realistic renders
 
 - In producing 3D projects, sometimes the goal is realism. Perhaps we're showcasing a real-life product on a website.
 - One way to achieve this (seen above) is with an environment map, e.g. HDR equirectangular texture (for better lighting).
@@ -664,7 +695,7 @@ While difficult and/or boring, it's important to power through such content.
 - Lastly, we can use other techniques like ambient occlusion, bloom, etc. but these require post-processing (later lesson).
 
 
-## Code structuring for bigger projects
+## 3.7.1 - Code structuring for bigger projects
 
 - A professional project should contain a maintainable codebase. Part of this is organisation.
 - Unorganised (spaghetti) code is hard to find, hard to re-use specific parts, liable to conflicts, etc.
@@ -681,7 +712,7 @@ While difficult and/or boring, it's important to power through such content.
 - For example, using an instance of "Experience" as a global variable may be seen as unacceptable to certain developers.
 
 
-## Shaders
+## 4.1.1. Shaders
 
 - Shaders is probably the most demanding topic within learning WebGL and ThreeJS.
 - Everything showing up in the WebGL render is made possible because of shaders.
@@ -778,7 +809,7 @@ While difficult and/or boring, it's important to power through such content.
 - For more information on 2D matrices and how to transform them, read: https://thebookofshaders.com/08/
 
 
-## Post processing
+## 5.1.1 - Post-processing
 
 - Post-processing is about adding effects on the final image (the render).
 - People mostly use this technique in filmmaking, but we can do it in WebGL too.
