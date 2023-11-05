@@ -1,7 +1,43 @@
-# Notes
+# ThreeJS Journey Notes
+***
+I hope these notes will provide a useful record to look back on when applying knowledge to real-world projects!
 
-## First impressions of course
 
+## Contents
+***
+
+### 1. Basics
+1.1   - First impressions of the course
+1.2.1 - What is ThreeJS?
+1.2.2 - Applications of the technology
+1.2.3 - What is WebGL?
+1.2.4 - Other libraries
+1.3.1 - Default object positioning
+1.3.2 - Using Three classes from modules
+1.4.1 - Properties for transforming objects
+1.4.2 - Groups
+1.4.3 - Useful camera method: "lookAt"
+1.5   - Animation
+1.6.1 - Cameras
+1.6.2 - Cursor position
+1.6.3 - Built-in controls
+1.6.4 - Instantiating orbit controls
+
+### 2. Classic techniques
+
+### 3. Advanced techniques
+
+### 4. Shaders
+
+### 5. Extra
+
+### 6. Portal scene
+
+### 7. React Three Fiber
+
+
+## 1.1. - First impressions of the course
+***
 The main take-away from this introduction is that ThreeJS is now a stable, mature technology.
 It is capable of producing a vast array of media for all sorts of projects (as seen on ThreeJs.org examples).
 
@@ -10,55 +46,56 @@ While difficult and/or boring, it's important to power through such content.
 
 "If it's hard to learn, it's valuable knowledge"!
 
-## What is Three.js?
-
-- Three.js is a 3D JavaScript library.
+## 1.2.1 - What is ThreeJS?
+***
+- ThreeJS (or Three.js) is a 3D JavaScript library.
 - It uses the MIT license.
 - It was originally created by "Mr. Doob" (Ricardo Cabello) — now maintained by thousands of contributors.
 - It enables developers to create 3D experiences for the web.
 - It works with WebGL, but can also work with SVG and CSS (in limited ways).
 - See the change logs on the Three.js Github repo for changes.
 
-## Applications of the technology
-
+## 1.2.2 Applications of the technology
+***
 - Rich interactive imagery: https://www.oculus.com/medal-of-honor/?locale=en_GB
 - Motion graphics: https://cornrevolution.resn.global/
 - Product demonstrations: https://live.vanmoof.com/
 - Selectable, animated maps: https://chartogne-taillet.com/en
 - Flow field effects (particle effects)
 - Videogames: https://heraclosgame.com/, https://letsplay.ouigo.es/
-- And so much more.
+- ...and so much more.
 
-## What is WebGL?
-
+## 1.2.3 - What is WebGL?
+***
 - WebGL is a JavaScript API.
 - Can render triangles very efficiently.
 - Results can be drawn in `<canvas>` element (HTML5).
 - Compatible with most modern browsers.
-- Uses the user's GPU which makes it really fast — can do thousands of parallel calculations. CPUs have multiple cores but typically JavaScript in the browser uses one of them so the calculations occur one at a time (blocking).
+- Uses the GPU which makes it really fast — can do thousands of parallel calculations.
+- CPUs have multiple cores but typically JavaScript (in browser) uses one, so calculations occur one at a time (blocking).
 - WebGL can be used for 2D as well, but we will focus on 3D.
 - WebGL uses instructions called "shaders" to place points and draw pixels (to colourise and place).
 - Native WebGL is hard. Drawing a single triangle on the canvas takes at least 100 lines of code.
 - Three.js helps by offering a level of abstraction above WebGL — making it easier for us developers.
 
-## Other libraries
-
+## 1.2.4 - Other libraries
+***
 - There are other WebGL libraries, but they aren't as popular and/or as stable and/or as versatile.
 - Examples include: Babylon.js, Fab (formerly Sketchfab), Verge3D, and Unity.
 
-## Default object positioning
-
+## 1.3.1 - Default object positioning
+***
 - By default, an object is positioned in the middle of the scene.
 - This means we must move the camera on the `Z` axis so we aren't viewing the scene from inside of the object.
 
-## Using Three classes from modules
-
+## 1.3.2 - Using Three classes from modules
+***
 - When we use Three modules in Node, we need to run our project on a server.
 - We can do this locally with Vite and debug with multiple devices connected to the same network address.
 - Using Node gives us access to syntax like so: `import * as THREE from 'three'` (imports all ThreeJS core classes).
 
-## Properties for transforming objects
-
+## 1.4.1 - Properties for transforming objects
+***
 - There are 4 properties for transformations: (1) `position` (2) `scale` (3) `rotation` (4) `quaternion`.
 - Any class that inherits from the `Object3D` class has access to these, i.e. cameras, meshes, etc.
 - Transformations are compiled under the hood using matrices (multidimensional mathematical arrays).
@@ -79,18 +116,18 @@ While difficult and/or boring, it's important to power through such content.
 - We can fix gimbal lock by reordering axes' order like so: `object.rotation.reorder('yxz')`.
 - The axes order problem is why most engines and 3D software uses `quaternion` rather than `rotation`.
 
-## Groups
-
+## 1.4.2 - Groups
+***
 - To transform many objects at once we can use the `Group` class.
 - This inherits from/is an instance of `Object3D`.
 - Get into the habit of putting things in groups!
 
-## Useful camera method: "lookAt"
-
+## 1.4.3 - Useful camera method: "lookAt"
+***
 - Ensures the camera looks exactly at the centre of a Vector3: `camera.lookAt(mesh.position)`.
 
-## Animation
-
+## 1.5 - Animation
+***
 - ThreeJS animations work through rendering many individual frames.
 - Most devices run at 60 frames per second, but our animations must be a consistent speed regardless of device.
 - We can achieve this with two native JavaScript components.
@@ -110,8 +147,8 @@ While difficult and/or boring, it's important to power through such content.
 - GSAP (GreenSock) has its own tick, so we don't need to use `requestAnimationFrame` or `Clock`.
 - The approach we take to animation (whether native JS, Clock, or GSAP) depends on the project and personal preferences.
 
-## Cameras
-
+## 1.6.1 - Cameras
+***
 - All ThreeJS cameras (`ArrayCamera`, `CubeCamera`, `OrthographicCamera`, etc.) inherit from `Camera`.
 - `Camera` is an abstract class (meaning we don't use it directly).
 - `ArrayCamera` renders a scene from multiple cameras on specific areas of the render (like old split-screen co-op games).
@@ -130,8 +167,8 @@ While difficult and/or boring, it's important to power through such content.
 - `OrthographicCamera` does not have a FOV parameter (has `left`, `right`, `top`, `bottom`), but has `near` and `far`.
 - Tip: to overcome a flat distorted orthographic view, multiply `left` and `right` by the aspect ratio value.
 
-## Cursor position
-
+## 1.6.2 - Cursor position
+***
 - We use `event.clientX` and `event.clientY` (in event listener) to get the cursor position in `window` or `document.body`.
 - However, to get the cursor position relative to the canvas size, we would use: `event.clientX / sizes.width`.
 - Do the same with `clientX` and `sizes.height`.
@@ -140,8 +177,8 @@ While difficult and/or boring, it's important to power through such content.
 - However, ThreeJS's Y goes up rather than down (like `clientY`), so we must invert.
 - Invert like so: `-(event.clientY / sizes.height - 0.5)`.
 
-## Built-in controls
-
+## 1.63 - Built-in controls
+***
 - ThreeJS has built-in controls to save us time: https://threejs.org/docs/index.html?q=controls#examples/en/controls
 - `FlyControls`. Allows us to move the camera like we're on a spaceship. Rotate on 3 axes, go back and forward.
 - `FirstPersonControls`. Like `FlyControls` but has a fixed up axis. More like a bird — can't do a barrel roll.
@@ -150,21 +187,21 @@ While difficult and/or boring, it's important to power through such content.
 - `TrackballControls`. Like `OrbitControls`, but no vertical angle limits. Rotate/spin even if the scene turns upside down.
 - `TransformControls` and `DragControls`. Nothing to do with the camera. More about manipulating objects.
 
-## Instantiating orbit controls
-
+## 1.64 - Instantiating orbit controls
+***
 - To use the `OrbitControls` class we have to import it from a specific part of the `three` module.
 - Import like so: `import { OrbitControls } from 'three/addons/controls/OrbitControls.js`.
 - Some versions of ThreeJS instead have: `import { OrbitControls } from "three/examples/jsm/controls/OrbitControls`.
 - By default, the orbit controls are centred. Change this with `controls.target.y = 1` (example) and `controls.update()`.
 
-## Damping
-
+## 1.65 - Damping
+***
 - "Damping" is a term that refers to smoothing an animation by applying acceleration and friction.
 - Thankfully, there's built-in damping. We don't have to code the formulae manually.
 - We enable damping with something like: `controls.enableDamping = true`. Add `controls.update()` inside the tick function.
 
-## Fullscreen and resizing
-
+## 1.71 - Fullscreen and resizing
+***
 - For a more immersive experience, we could have the canvas fill the size of the viewport.
 - We can also make the page enter into fullscreen mode.
 - We first need the viewport's width and height with `window.innerWidth` and `window.innerHeight`.
@@ -180,8 +217,8 @@ While difficult and/or boring, it's important to power through such content.
 - Lastly, enter fullscreen with a double click event listener that calls the `requestFullscreen` JavaScript API.
 - See documentation for `requestFullscreen` API: https://developer.mozilla.org/en-US/docs/Web/API/Element/requestFullscreen
 
-## Pixel ratio
-
+## 1.72 - Pixel ratio
+***
 - The "pixel ratio" is how many physical pixels a screen displays per software pixel.
 - Traditionally, all screens had a pixel ratio of 1.
 - Developers like Apple set a trend for producing screens with a pixel ratio of 2 or more. Retina display has 2, for example.
@@ -193,8 +230,8 @@ While difficult and/or boring, it's important to power through such content.
 - `renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))` produces better renders on pixel ratios of 2.
 - We cap the pixel ratio at 2 to minimise performance issues on devices with higher pixel ratios.
 
-## Geometries
-
+## 1.81 - Geometries
+***
 - Geometries in three-dimensional space are comprised of vertices (points) and faces.
 - Faces are drawn in WebGL using triangles that join over vertices (create surfaces).
 - Geometries can be used for meshes but also particles (a particle per vertex).
@@ -217,8 +254,8 @@ While difficult and/or boring, it's important to power through such content.
 - More subdivisions means more faces which means more triangles (recall that it's 2 triangles per face).
 - Better discern these details in a shape by enabling wireframe on the material: `material: true` as a parameter.
 
-## Buffer geometries
-
+## 1.82 - Buffer geometries
+***
 - We can create our own geometries programmatically using `BufferGeometry`.
 - `BufferGeometry` is a very efficient way of creating shapes and the GPU will render it very quickly.
 - This efficiency and speed comes from the way computers read values in a `Float32Array`.
@@ -233,8 +270,8 @@ While difficult and/or boring, it's important to power through such content.
 - And if you look closely, every vertex can be used by various neighbour triangles.
 - That will result in a smaller attribute array and performance improvement.
 
-## Debug UI
-
+## 1.9 - Debug UI
+***
 - An efficient way of reviewing changes in real-time as we develop in ThreeJS is with debugging UIs/GUIs.
 - We can create our own. However there are many existing importable libraries to save time.
 - Some of these libraries include: "dat.GUI", "control-panel", "ControlKit", "Guify", "Ouify".
@@ -245,7 +282,7 @@ While difficult and/or boring, it's important to power through such content.
 - We should get into a habit of including debug UIs/GUIs in projects and adding tweaks to the panel as we go.
 
 
-## Textures
+## 1.10 - Textures
 
 - Textures are based on images that cover the surface of geometry. There many different types and effects.
 - The most simple texture type is color or albedo.
@@ -738,4 +775,4 @@ While difficult and/or boring, it's important to power through such content.
 - Considering using a texture representing the likes of Perlin noise than having it generate programmatically.
 - Use "defines" in GLSL code.
 - Do calculations in the vertex shader. Pass the result to fragment shader with varyings (rather than in fragment shader).
--
+- Test with bad bandwidth simulation (use Chrome devtools — make sure "disable cache" is checked).
