@@ -557,7 +557,7 @@ While difficult and/or boring, it's important to power through such content.
 - Physics can enhance the user experience with added realism, engagement, and immersion.
 - There's many forces we can use like friction, gravity, buoyancy, tension, etc.
 - However, writing these from scratch can be counterproductive. Use libraries where possible.
-- If a 2D physics library is sufficient (projects where vertical axis aren't needed, e.g. pool game), we should use it.
+- If a 2D physics library is sufficient (projects where vertical axis isn't needed, e.g. pool game), we should use it.
 - Ammo.js might be the most used physics library. However, Cannon.js is easier to implement and understand.
 - Libraries like Cannon.js have their own virtual setup that's distinct from the ThreeJS scene.
 - Cannon.js, for example, uses `Vec3` instead of `Vector3`, `Body` for objects, and so on.
@@ -741,22 +741,22 @@ While difficult and/or boring, it's important to power through such content.
 - GLSL requires semicolons to delimit lines of code.
 - GLSL is a typed language. We must specify the variable type immediately: `float`, `int`, `string`, etc.
 - A type that we'll commonly see in GLSL is `vec2`. This has two values: x, y (coordinates).
-- We can change values after their assignment. `vec2 someVect = vec2(0.1, 0.2);` `someVect.x = 1.1;` will change it.
+- We can change values after assignment. `vec2 someVect = vec2(0.1, 0.2);` `someVect.x = 1.1;` will change it.
 - `vec3` is like `vec2` but with an additional value: x, y, z (coordinates) or r, g, b (colour values).
 - We can make `vec3` from mutating a `vec2` by adding an additional value. This is called "swizzling".
 - `vec4` is like `vec3` but with a 4th value: x, y, z, and w (coordinates) or r, g, b, and a (colour + alpha).
 - There are other types like `mat2`, `mat3`, `mat4`, `sample2D`, but we'll deal with these later.
 - In GLSL, we can create functions. However, these must start with the type of value that will be returned.
 - There are built-in basic functions like `sin`, `cos`, `max`, `min`, `pow`, `exp`, `mod`, `clamp`, etc.
-- There are also more specialised functions like `cross`, `dot`, `mix`, `stop`, `smoothstep`, `length`, `distance`, etc.
+- There are also more specialised functions, e.g. `cross`, `dot`, `mix`, `stop`, `smoothstep`, `length`, `distance`, etc.
 - There's no beginner-friendly documentation, but try "Shaderific", "Kronos Group Registry", and "Book of Shaders".
 
 
 ## Vertex shader
 
-- The vertex shade needs a function beginning `void main()`. This is called automatically and doesn't return anything.
+- The vertex shader begins `void main()`. This is called automatically (doesn't return anything).
 - A `gl_Position` will be set with model matrix values and any modifications.
-- We're working in `vec4` because of something called the "clip space" which has a 4th value (one we don't deal with).
+- We're working in `vec4` because of something called "clip space" which has a 4th value (one we don't deal with).
 - There are some components to be aware of:
 - `modelMatrix` applies transformations relative to the mesh (position, rotation, scale).
 - `viewMatrix` applies transformations relative to the camera (position, rotation, fov, near, and far).
@@ -802,8 +802,8 @@ While difficult and/or boring, it's important to power through such content.
 
 - As well as creating brand new shader materials, we can modify built-in ThreeJS ones.
 - Perhaps we want to add vertex animations to MeshStandardMaterial?
-- We can do this by either using a ThreeJS hook that is triggered before compilation or recreating the material.
-- Or recreating a ThreeJS material. Although, this would take a long time. We would have to handle lights, env. maps, etc.
+- We can do this by either using a ThreeJS hook triggered before compilation or recreating the material.
+- Or recreating a ThreeJS material. But, it's time-consuming. We'd have to handle lights, env. maps, etc.
 - Using a ThreeJS hook is the best approach in most cases: `material.onBeforeCompile = (shader) => {}`.
 - This code snippet gives us access to vertex and fragment shader information.
 - For more information on 2D matrices and how to transform them, read: https://thebookofshaders.com/08/
@@ -813,9 +813,9 @@ While difficult and/or boring, it's important to power through such content.
 
 - Post-processing is about adding effects on the final image (the render).
 - People mostly use this technique in filmmaking, but we can do it in WebGL too.
-- We can adjust depth of field, bloom, "god ray", motion blur, add glitch effects, outlines, change colours, etc.
+- We can adjust depth of field, bloom, "god ray", motion blur, add glitch effects, change colours, etc.
 - A common way to do post processing with ThreeJS is with the `RenderTarget`.
-- The RenderTarget works like a buffer of sorts. Instead of rendering to the canvas, it renders to a texture first.
+- The RenderTarget works like a buffer. Instead of rendering to the canvas, it renders to a texture first.
 - This texture is then able to have effects added to it through the fragment shader.
 - The effects we apply in post processing are called "passes".
 - We can add multiple passes, but each pass reduces performance!
@@ -846,7 +846,7 @@ While difficult and/or boring, it's important to power through such content.
 - Test on an array of devices, browsers, etc. and keep an eye on the weight of the website.
 - Minimise "draw calls" (actions of the GPU). The less of them, the better the performance.
 - Spector.js is a good Chrome extension for monitoring draw calls.
-- To get a count of triangles, lines, points, etc., we can use this: `console.log(renderer.info`
+- To get a count of triangles, lines, points, etc., we can use this: `console.log(renderer.info)`.
 - Write efficient JavaScript — especially in the tick function.
 - Dispose of things: https://threejs.org/docs/#manual/en/introduction/How-to-dispose-of-objects
 - Avoid lights if possible, but if you have to use them use cheap lights like ambient and hemisphere lights.
@@ -855,7 +855,7 @@ While difficult and/or boring, it's important to power through such content.
 - Use castShadow and receiveShadow wisely.
 - Deactivate shadow update (shadow on first frame only):
 - `renderer.shadowMap.autoUpdate = false` and `renderer.shadowMp.needsUpdate = true`.
-- Use small textures and resize your texture as small as possible. Also, keep power of 2 resolutions for mipmaps.
+- Use small textures/resize your textures. Also, keep power of 2 resolutions for mipmaps.
 - Use buffer geometries. Merge geometries using `BufferGeometryUtils`.
 - Create an `InstancedMesh`.
 - Use Draco compression on complex models. Use Gzip compression on assets.
@@ -865,7 +865,54 @@ While difficult and/or boring, it's important to power through such content.
 - Limit passes on post-processing. Perhaps merge passes when multiple passes are needed.
 - Consider `lowp` precision for lower performance devices when implementing shaders.
 - Avoid "if" statements when working with shaders. Use methods like `clamp()` instead.
-- Considering using a texture representing the likes of Perlin noise than having it generate programmatically.
+- Considering using a texture representing Perlin noise than having it generate programmatically.
 - Use "defines" in GLSL code.
 - Do calculations in the vertex shader. Pass the result to fragment shader with varyings (rather than in fragment shader).
 - Test with bad bandwidth simulation (use Chrome devtools — make sure "disable cache" is checked).
+
+
+## 6.1.1. Creating a scene in Blender
+
+- Renders in 3D software like Blender usually looks better than the model we import into ThreeJS.
+- This is despite our best efforts to match lighting and colours.
+- The reason for this comes down to the technique "ray tracing" in 3D software (casting rays in many directions).
+- Ray tracing looks far superior, but takes a long time to render.
+- In WebGL/ThreeJS, we only have a few milliseconds because we want to render at least 60 times per second.
+- A technique called "baking" is a good solution to this problem.
+- Baking involves saving the ray-traced renders into textures that we place on the geometry.
+- With baking there is no need for light and real-time shadows which makes it excellent for performance.
+- The trade-off is that the "light" is not dynamic. This isn't an issue in many cases.
+- To created baked textures, we need to create seams on our objects (use edge selector in edit for this).
+- We then "unwrap" objects from these seams and arrange the unwrapped texture in the UV editor.
+- If any objects are linked, select them all and go "Objects" > "Relationships" > "Make Single User".
+- Before baking, check the normals (by area) on the unwrapped UV maps. Keep them the same colour.
+- Lastly, before exporting we should use Blender's "Compositor" to apply a denoiser and "Filmic" on the render.
+
+## 6.1.2. Fixing imported textures
+
+- By default, a texture exported from Blender is flipped the wrong way. Fix with `bakedTexture.flipY = false`.
+- We also need to fix the colour space for consistency: `bakedTexture.colorSpace = THREE.SRGBColorSpace`.
+- To improve performance, we should merge all baked objects into one geometry that will be drawn in one call.
+
+
+## 7.1.1. React and React Three Fiber
+
+- ThreeJS can use used with native JavaScript, but also within specific libraries. React is one such library.
+- React makes developing ThreeJS web apps easier. It uses JSX, data-binding, and provides tools and structure.
+- React is the most popular library for integrating ThreeJS.
+- There are alternatives like Vue.js, Svelte, etc. Less popular ones don't integrate as well with ThreeJS.
+- The drawback of libraries with ThreeJS is that debugging is harder (because of abstraction and complexity).
+
+## 7.1.2. React Three Fiber examples
+
+Part of why ThreeJS integrates so well with React is the renderer technology "React Three Fiber". Examples:
+- https://codesandbox.io/s/threejs-journey-level-1-kheke
+- https://codesandbox.io/s/baking-soft-shadows-hxcc1x
+- https://codesandbox.io/s/backdrop-and-cables-2ij9u
+- https://codesandbox.io/s/bruno-simons-20k-challenge-2qfxj4
+- https://codesandbox.io/s/building-dynamic-envmaps-e662p3
+- https://codesandbox.io/s/interactive-spline-scene-live-html-f79ucc
+- https://codesandbox.io/s/sport-hall-s006f
+- https://codesandbox.io/s/ballpit-mvkqs
+- https://codesandbox.io/s/space-game-i2160
+- https://codesandbox.io/s/layer-materials-nvup4
