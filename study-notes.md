@@ -586,7 +586,7 @@ While difficult and/or boring, it's important to power through such content.
 - GLTF supports different sets of data like geometries, materials, cameras, lights, animations, etc.
 - GLTF sample models: https://github.com/KhronosGroup/glTF-Sample-Models
 - There are different GLTF formats: gLTF, gLTF-Binary (.glb), gLTF-Draco, and gLTF-Embedded.
-- GLTF are exported with PBR materials.
+- GLTFs are exported with PBR materials.
 - Use the GLTF and ThreeJS loaders to import a GLTF. Use `console.log` to review its properties.
 - You will see that it adds it as a `Group` scene (including children like a camera). We only want the mesh!
 - We can do this by importing only the mesh children element. However, it's missing scale metadata.
@@ -888,6 +888,7 @@ While difficult and/or boring, it's important to power through such content.
 - Before baking, check the normals (by area) on the unwrapped UV maps. Keep them the same colour.
 - Lastly, before exporting we should use Blender's "Compositor" to apply a denoiser and "Filmic" on the render.
 
+
 ## 6.1.2. Fixing imported textures
 
 - By default, a texture exported from Blender is flipped the wrong way. Fix with `bakedTexture.flipY = false`.
@@ -903,7 +904,8 @@ While difficult and/or boring, it's important to power through such content.
 - There are alternatives like Vue.js, Svelte, etc. Less popular ones don't integrate as well with ThreeJS.
 - The drawback of libraries with ThreeJS is that debugging is harder (because of abstraction and complexity).
 
-## 7.1.2. React Three Fiber examples
+
+## 7.2.1. React Three Fiber examples
 
 Part of why ThreeJS integrates so well with React is the renderer technology "React Three Fiber". Examples:
 - https://codesandbox.io/s/threejs-journey-level-1-kheke
@@ -916,3 +918,24 @@ Part of why ThreeJS integrates so well with React is the renderer technology "Re
 - https://codesandbox.io/s/ballpit-mvkqs
 - https://codesandbox.io/s/space-game-i2160
 - https://codesandbox.io/s/layer-materials-nvup4
+
+## 7.3.1. Drei
+
+- Drei is a set of helpers that can be added as components to React to make crafting experiences much more efficient.
+- Drei (German for "Three" by the way) helps with camera controls, geometries, post-processing, HTML implementation, etc.
+- Check out a list of helpers here: https://github.com/pmndrs/drei
+- We can use Drei to implement `OrbitControls` much more easily in R3F than we've seen before.
+- We can also use Drei to implement `TransformControls` that help users transform positions, rotations, scales, etc.
+- Both `OrbitControls` and `TransformControls` are customisable (see documentation and lessons for more).
+- If there are conflicts between these controls, use the `makeDefault` parameter on the one you want to be dominant.
+- There's also pivot controls. These are better for user-facing transformations and not just for debugging.
+- Drei also helps us add DOM elements in the 3D space of our scene using the `Html` helper.
+- We can even customise the styles of HTML in our scene with CSS. Check in dev tools for the elements it displays.
+- To simulate perspective in HTML in our scene, add and then tweak the `distanceFactor` attribute.
+- We can also add text for our scene with the Text helper that uses Drei in conjuction with "Troika".
+- The `Text` helper utilises "SDF" fonts under the hood (a complex, but less limited 3D text solution for ThreeJS).
+- SDF stands for "Signed Distance Field". It's usually used in fragment shaders to draw shapes.
+- See `troika-three-text` documentation: https://github.com/protectwise/troika/tree/main/packages/troika-three-text
+- Troika supports ".woff", ".ttf", and ".otf" font formats, but use ".woff" where possible (lightest one).
+- There's also fun helpers to add life to the scene like `Float`. This makes things float around like a balloon.
+- We can also use the likes of `MeshReflectorMaterial` to add reflections to materials — to great effect.

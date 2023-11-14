@@ -15,6 +15,7 @@
 | Gimbal lock           | A loss in rotation freedom, avoided by using quaternions. |
 | GLSL                  | A C-like language (GL Shader Language) for writing programs for rendering graphics on the GPU. |
 | HDRI                  | A 360° image for lighting/backgrounds — a mix of images (of different exposures) of the same scene. |
+| Hot module reloading  | A way of exchanging modules in a running app without a browser reload (seen in React) |
 | Library               | A collection of pre-written code for common tasks. |
 | Level of detail (LOD) | Different resolutions of a model displayed depending on camera distance (optimises performance). |
 | Matrix                | A mathematical construct for 3D point transformations. |
@@ -26,6 +27,7 @@
 | Post-processing       | Techniques applied to a scene after it has been rendered. Usually done with "EffectComposer" |
 | Quaternion            | A mathematical representation of 3D rotations, preventing gimbal lock. |
 | Raycasting            | Rays emitted to intersect with objects. Used for mouse picking and other interactions. |
+| SDF                   | Stands for "Signed Distance Field" and returns how far a 2D or 3D point is from a shape. |
 | Shader                | A program for calculating fragment and vertex attributes during rendering. |
 | Tween                 | The process of creating smooth transitions between two states or images. |
 | UV Mapping            | The process of projecting a 2D image texture onto a 3D model's surface. |
