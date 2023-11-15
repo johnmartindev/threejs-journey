@@ -939,3 +939,14 @@ Part of why ThreeJS integrates so well with React is the renderer technology "Re
 - Troika supports ".woff", ".ttf", and ".otf" font formats, but use ".woff" where possible (lightest one).
 - There's also fun helpers to add life to the scene like `Float`. This makes things float around like a balloon.
 - We can also use the likes of `MeshReflectorMaterial` to add reflections to materials — to great effect.
+
+
+## 7.4.1. Debugging
+
+- We should use `StrictMode` in React to warn of unused imports, infinite loops, forgotten `useEffect` dependencies, etc.
+- Use "React Developer Tools" browser extension for more developer tool options.
+- In the React Developer Tools tree, we can play with props and states of components.
+- There's another debug tool available to use called "Leva". Leva is a debug UI for React Three Fiber.
+- Leva is still under development by PMNDRS, so could change a lot in the coming years.
+- To help with organisation, we should use folders within the Leva UI.
+- "r3f-perf" helps with monitoring. We could still use "Stat.js", but this is a more advanced solution.
