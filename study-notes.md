@@ -591,9 +591,9 @@ While difficult and/or boring, it's important to power through such content.
 - You will see that it adds it as a `Group` scene (including children like a camera). We only want the mesh!
 - We can do this by importing only the mesh children element. However, it's missing scale metadata.
 - If the imported mesh without scale metadata is too big or small, fix this in 3D software and try again.
-- Try Draco compression for high geometry counts. Check the size of model files.
-- Draco allows for a much lighter model (applied to buffer data, i.e. geometry (stored in .bin)).
-- Use the Draco decoder (it's written in Web Assembly and runs in a "worker").
+- Try DRACO compression for high geometry counts. Check the size of model files.
+- DRACO allows for a much lighter model (applied to buffer data, i.e. geometry (stored in .bin)).
+- Use the DRACO decoder (it's written in Web Assembly and runs in a "worker").
 - To use animation "actions" from the `AnimationClip`, we need to create an `AnimationMixer`.
 - ThreeJS editor to test models: https://www.threejs.org/editor
 
@@ -858,7 +858,7 @@ While difficult and/or boring, it's important to power through such content.
 - Use small textures/resize your textures. Also, keep power of 2 resolutions for mipmaps.
 - Use buffer geometries. Merge geometries using `BufferGeometryUtils`.
 - Create an `InstancedMesh`.
-- Use Draco compression on complex models. Use Gzip compression on assets.
+- Use DRACO compression on complex models. Use Gzip compression on assets.
 - Lower FOV, lower range between near and far, and use frustum culling.
 - Keep pixel ratios at 2 or less.
 - Only use anti-alias when need be.
@@ -941,7 +941,7 @@ Part of why ThreeJS integrates so well with React is the renderer technology "Re
 - We can also use the likes of `MeshReflectorMaterial` to add reflections to materials — to great effect.
 
 
-## 7.4.1. Debugging
+## 7.5.1. Debugging
 
 - We should use `StrictMode` in React to warn of unused imports, infinite loops, forgotten `useEffect` dependencies, etc.
 - Use "React Developer Tools" browser extension for more developer tool options.
@@ -950,3 +950,20 @@ Part of why ThreeJS integrates so well with React is the renderer technology "Re
 - Leva is still under development by PMNDRS, so could change a lot in the coming years.
 - To help with organisation, we should use folders within the Leva UI.
 - "r3f-perf" helps with monitoring. We could still use "Stat.js", but this is a more advanced solution.
+
+
+## ## 7.6.1.  Models in React Three Fiber
+
+- We load models into R3F with `useLoader` in conjunction with `GLTFLoader`
+- As we've done previously, we can import models that are DRACO compressed for better optimisation
+- To use DRACO in the loader, we must use `DRACOLoader`, set its decoder path, and set it on the loader.
+- If we're using bigger models, we should simulate them loading on slow bandwidth with network throttling.
+- To simulate network throttling, use dev tools on Chrome and activate it under the network tab (disable cache).
+- 100Mbit/s is a suitable connection speed for testing. It simulates the experience of users on slower connections.
+- If we see a blank screen for a second or two before the scene loads, we may need to consider "lazy loading".
+- Lazy loading allows us to individually load assets like models, so the rest of the experience isn't help up.
+- Lazy loading also allows fallback components that appear until the bigger asset has loaded in.
+- We use lazy loading by wrapping elements in the `<Suspense></Suspense>` tag.
+- Preloading is also available in R3F with `useGLTF.preload('./somemodel.glb')`.
+- To break up a model into distinct meshes that can be manipulated individually, we can use GLTF=>RF3.
+- There's a command tool to generate code for this, but an online tool that's even simpler: https://gltf.pmnd.rs

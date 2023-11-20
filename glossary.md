@@ -16,6 +16,7 @@
 | GLSL                  | A C-like language (GL Shader Language) for writing programs for rendering graphics on the GPU. |
 | HDRI                  | A 360° image for lighting/backgrounds — a mix of images (of different exposures) of the same scene. |
 | Hot module reloading  | A way of exchanging modules in a running app without a browser reload (seen in React) |
+| Lazy-loading          | A technique for loading individual parts of a web experience (often deferred to load when it's needed). |
 | Library               | A collection of pre-written code for common tasks. |
 | Level of detail (LOD) | Different resolutions of a model displayed depending on camera distance (optimises performance). |
 | Matrix                | A mathematical construct for 3D point transformations. |
