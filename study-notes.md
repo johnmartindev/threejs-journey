@@ -101,11 +101,52 @@ I hope these notes will provide a useful record to look back on when applying kn
 
 ### 4. Shaders
 
+4.1.1 - Shaders
+
+4.1.2 - Creating a custom shader with GLSL
+
+4.1.3 - Vertex shader
+
+4.1.4 - Fragment shader
+
+4.2.1 - Shader patterns
+
+4.3.1 - Particles revisited: tips
+
+4.4.1 - Modifying materials
+
+
 ### 5. Extra
+
+5.1.1 - Post-processing
+
+5.1.2 - Anti-aliasing passes
+
+5.2.1 - Performance tips II
+
 
 ### 6. Portal scene
 
+6.1.1 - Creating a scene in Blender
+
+6.1.2 - Fixing imported textures
+
+
 ### 7. React Three Fiber
+
+7.1.1 - React and React Three Fiber
+
+7.2.1 - React Three Fiber examples
+
+7.3.1 - Drei
+
+7.4.1 - Debugging
+
+7.5.1 - Post-processing in R3F: passes vs. effects
+
+7.6.1 - Use-gesture tips for developing on mobiles
+
+7.7.1 - Physics in React Three Rapier
 
 
 ## 1.1. - First impressions of the course
@@ -712,7 +753,7 @@ While difficult and/or boring, it's important to power through such content.
 - For example, using an instance of "Experience" as a global variable may be seen as unacceptable to certain developers.
 
 
-## 4.1.1. Shaders
+## 4.1.1 - Shaders
 
 - Shaders is probably the most demanding topic within learning WebGL and ThreeJS.
 - Everything showing up in the WebGL render is made possible because of shaders.
@@ -729,7 +770,7 @@ While difficult and/or boring, it's important to power through such content.
 - Why would we write our own shaders at all? ThreeJS materials are limited and we can add custom post-processing.
 
 
-## Creating a custom shader with GLSL
+## 4.1.2 - Creating a custom shader with GLSL
 
 - To create our own shaders in ThreeJS, we can use the classes: (1) `ShaderMaterial` and (2) `RawShaderMaterial`.
 - `ShaderMaterial` has some code automatically added to the shader codes, where `RawShaderMaterial` does not.
@@ -752,7 +793,7 @@ While difficult and/or boring, it's important to power through such content.
 - There's no beginner-friendly documentation, but try "Shaderific", "Kronos Group Registry", and "Book of Shaders".
 
 
-## Vertex shader
+## 4.1.3 - Vertex shader
 
 - The vertex shader begins `void main()`. This is called automatically (doesn't return anything).
 - A `gl_Position` will be set with model matrix values and any modifications.
@@ -763,7 +804,7 @@ While difficult and/or boring, it's important to power through such content.
 - `projectionMatrix` transforms the coordinates into the clip space coordinates.
 
 
-## Fragment shader
+## 4.1.4 - Fragment shader
 
 - When working with the raw shader, we have to set a float precision value.
 - The precision can be `highp` (beware of performance hit), `mediump`, or `lowp` (buggy on some devices).
@@ -774,7 +815,7 @@ While difficult and/or boring, it's important to power through such content.
 - We can use uniforms in both vertex and fragment shader. It's data that doesn't change between vertices.
 
 
-## Shader patterns
+## 4.2.1 - Shader patterns
 
 - In creating shaders, we can create specific patterns like stars, circles, light lenses, waves, etc.
 - Using textures to do this can get heavy and we'll have less control.
@@ -788,7 +829,7 @@ While difficult and/or boring, it's important to power through such content.
 - To add more "natural" randomness, we should consider "Perlin noise": https://thebookofshaders.com/11/
 
 
-## Particles revisited: tips
+## 4.3.1 - Particles revisited: tips
 
 - Use shaders for efficiency and performance (rather than animating each vertex of geometry with the CPU).
 - Use randomness in your particles. If you don't, it looks fake. In real life, particles are random sizes.
@@ -798,7 +839,7 @@ While difficult and/or boring, it's important to power through such content.
 - Check ThreeJS source code for any other formulae we might need in shaders. Copy, paste, and adapt it.
 
 
-## Modifying materials
+## 4.4.1 - Modifying materials
 
 - As well as creating brand new shader materials, we can modify built-in ThreeJS ones.
 - Perhaps we want to add vertex animations to MeshStandardMaterial?
@@ -828,7 +869,7 @@ While difficult and/or boring, it's important to power through such content.
 - Issues that might need fixed: resizing effects composer, gamma pass for reducing darkness in RGB shift, and anti-aliasing.
 
 
-## Anti-aliasing passes
+## 5.1.2 - Anti-aliasing passes
 
 - FXAA: Performant, but the result is just "okay" (can be blurry).
 - SMAA: Usually better than FXAA, but less performant — not to be confused with MSAA.
@@ -837,7 +878,7 @@ While difficult and/or boring, it's important to power through such content.
 - There are many others, but these are the main ones.
 
 
-## Performance tips II
+## 5.2.1 - Performance tips II
 
 - We know we should target a 60fps experience (at least).
 - However, we should consider performance in terms of the CPU and the GPU.
@@ -871,7 +912,7 @@ While difficult and/or boring, it's important to power through such content.
 - Test with bad bandwidth simulation (use Chrome devtools — make sure "disable cache" is checked).
 
 
-## 6.1.1. Creating a scene in Blender
+## 6.1.1 - Creating a scene in Blender
 
 - Renders in 3D software like Blender usually looks better than the model we import into ThreeJS.
 - This is despite our best efforts to match lighting and colours.
@@ -889,14 +930,14 @@ While difficult and/or boring, it's important to power through such content.
 - Lastly, before exporting we should use Blender's "Compositor" to apply a denoiser and "Filmic" on the render.
 
 
-## 6.1.2. Fixing imported textures
+## 6.1.2 - Fixing imported textures
 
 - By default, a texture exported from Blender is flipped the wrong way. Fix with `bakedTexture.flipY = false`.
 - We also need to fix the colour space for consistency: `bakedTexture.colorSpace = THREE.SRGBColorSpace`.
 - To improve performance, we should merge all baked objects into one geometry that will be drawn in one call.
 
 
-## 7.1.1. React and React Three Fiber
+## 7.1.1 - React and React Three Fiber
 
 - ThreeJS can use used with native JavaScript, but also within specific libraries. React is one such library.
 - React makes developing ThreeJS web apps easier. It uses JSX, data-binding, and provides tools and structure.
@@ -905,7 +946,7 @@ While difficult and/or boring, it's important to power through such content.
 - The drawback of libraries with ThreeJS is that debugging is harder (because of abstraction and complexity).
 
 
-## 7.2.1. React Three Fiber examples
+## 7.2.1 - React Three Fiber examples
 
 Part of why ThreeJS integrates so well with React is the renderer technology "React Three Fiber". Examples:
 - https://codesandbox.io/s/threejs-journey-level-1-kheke
@@ -919,7 +960,7 @@ Part of why ThreeJS integrates so well with React is the renderer technology "Re
 - https://codesandbox.io/s/space-game-i2160
 - https://codesandbox.io/s/layer-materials-nvup4
 
-## 7.3.1. Drei
+## 7.3.1 - Drei
 
 - Drei is a set of helpers that can be added as components to React to make crafting experiences much more efficient.
 - Drei (German for "Three" by the way) helps with camera controls, geometries, post-processing, HTML implementation, etc.
@@ -941,7 +982,7 @@ Part of why ThreeJS integrates so well with React is the renderer technology "Re
 - We can also use the likes of `MeshReflectorMaterial` to add reflections to materials — to great effect.
 
 
-## 7.4.1. Debugging
+## 7.4.1 - Debugging
 
 - We should use `StrictMode` in React to warn of unused imports, infinite loops, forgotten `useEffect` dependencies, etc.
 - Use "React Developer Tools" browser extension for more developer tool options.
@@ -950,3 +991,34 @@ Part of why ThreeJS integrates so well with React is the renderer technology "Re
 - Leva is still under development by PMNDRS, so could change a lot in the coming years.
 - To help with organisation, we should use folders within the Leva UI.
 - "r3f-perf" helps with monitoring. We could still use "Stat.js", but this is a more advanced solution.
+
+
+## 7.5.1 - Post-processing in R3F: passes vs. effects
+
+- We previously looked at "passes" in post-processing and how performance suffers with each pass applied.
+- React Three Fiber has a way of consolidating multiple passes into one "effect" to solve this issue.
+- React Three Fiber does this while keeping the order in which we added them.
+
+
+## 7.6.1 - Use-gesture tips for developing on mobiles
+
+- When users swipe up and down and left to right, it can refresh the page or redirect.
+- When developing interactive 3D scenes, we don't necessarily want this.
+- See the following resource on how to deal with these issues: https://use-gesture.netlify.app/docs/extras/#touch-action
+
+
+## 7.7.1 - Physics in React Three Rapier
+
+- We've previously seen how the physics library Rapier works, but not with React Three Fiber.
+- React Three Rapier can be imported as an NPM module and implemented using the `<Physics>` tag.
+- Within the `<Physics>` tag, we can include "rigid bodies" using the `<RigidBody>` tag.
+- Rigid bodies can contain multiple meshes and we can compose objects using it.
+- These rigid bodies can be assigned one or more "colliders".
+- The default collider of a rigid body is a cuboid.
+- For more spherical bodies, we can use the ball collider `<BallCollider>`.
+- For more complex bodies, we can use the likes of hull and trimesh colliders. However, watch performance!
+- See Rapier documentation for full list of colliders: https://rapier.rs/javascript3d/classes/
+- We can, of course, play with gravity. By default it is ~9.81 m/s2 (the gravity near earth's surface).
+- Keep in mind that just like real-life, the mass of a rigid body does not affect its falling speed!
+- There's also "impulses" for applying forces. These require a reference (`useRef` needed).
+- Debug is available to us (shows collider dimensions), but bear in mind it affects performance.
